@@ -25,13 +25,13 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          
+          npm run test --if-present
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ./build
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'maricle-todo-list'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CC3FC4198F6145808FFE40C6BF0528DB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_870B7FFF69BB44218468428F1CA02E09 }}
           package: .
