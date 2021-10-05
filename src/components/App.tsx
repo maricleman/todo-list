@@ -6,7 +6,7 @@ function App() {
     return (
         <div>
             <Header
-                message="Welcome to the world of types!"
+                message="Welcome to the world of TypeScript!"
                 numberOfDaysExperience={5}
             />
         </div>
