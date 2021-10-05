@@ -24,7 +24,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build --if-present
+          npm run build:prod --if-present
           npm run test --if-present
       
       - name: Upload artifact for deployment job
@@ -53,4 +53,4 @@ jobs:
           app-name: 'maricle-todo-list'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_870B7FFF69BB44218468428F1CA02E09 }}
-          package: .
+          package: ./dist
