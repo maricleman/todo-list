@@ -1,14 +1,13 @@
 import React from 'react'
-import Header from './Header';
+import Title from './Title';
+import AddItem from './AddItem';
 
 function App() {
 
     return (
         <div>
-            <Header
-                message="Welcome to the world of TypeScript!"
-                numberOfDaysExperience={5}
-            />
+            <Title />
+            <AddItem />
         </div>
     );
 }

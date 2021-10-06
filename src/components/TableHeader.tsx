@@ -7,7 +7,7 @@ type AppProps = {
 } /* use `interface` if exporting so that consumers can extend */
 
 /** We specify in our functional component what props we expect */
-function Header({ message, numberOfDaysExperience }: AppProps) {
+function TableHeader({ message, numberOfDaysExperience }: AppProps) {
 
     return (
         <div>
@@ -17,4 +17,4 @@ function Header({ message, numberOfDaysExperience }: AppProps) {
     );
 }
 
-export default Header
+export default TableHeader

@@ -47,5 +47,5 @@ module.exports = {
  resolve: {
     extensions: ['.tsx', '.js'],
   },
- plugins: [new HtmlWebpackPlugin({ template: './deploy/index.html' })],
+ plugins: [new HtmlWebpackPlugin({ template: './deploy/index.html' })]
 }
