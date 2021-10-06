@@ -53,4 +53,4 @@ jobs:
           app-name: 'maricle-todo-list'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_870B7FFF69BB44218468428F1CA02E09 }}
-          package: ./dist
+          package: .
