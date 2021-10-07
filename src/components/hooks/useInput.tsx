@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 /**
- * More research to do. 
+ * Custom hook to simplify form submission.
  * Read more here:
  * https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/
  */
