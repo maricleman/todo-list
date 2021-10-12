@@ -7,7 +7,11 @@ function App() {
     const [itemsInTodoList, setItemsInTodoList] = useState(['']);
 
     const handleAddNewItemToList = (paramNewItem) => {
-        setItemsInTodoList([...itemsInTodoList, paramNewItem]);
+        if (itemsInTodoList[0] === '') {
+            setItemsInTodoList([paramNewItem]);
+        } else {
+            setItemsInTodoList([...itemsInTodoList, paramNewItem]);
+        }
     }
 
     return (

@@ -21,7 +21,6 @@ type AppProps = {
 
 export const TodoListTable: React.FC<AppProps> = (props) => {
     const { itemsInTodoList } = props;
-    const { value, setValue, reset } = useInput('');
     const stringResources = useContext(ResourceManager);
 
 
