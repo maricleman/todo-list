@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import ResourceManager from './ResourceManager';
+import ResourceManager from '../ResourceManager';
 
 
 function Title() {
