@@ -8,7 +8,7 @@ import { cssExports } from '../styles/AddItemStyles.scss'
 
 // const cx = classNames.bind();
 type AppProps = {
-    itemsInTodoList: Array<string>,
+    itemsInTodoList: Array<TodoItem>,
 }
 /**
  * Thanks to the following for helping me out!
@@ -26,12 +26,12 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
 
 
     useEffect(() => {
-        if (itemsInTodoList[0] !== '') {
-            setDisplayList(true);
-        }
-        else {
-            setDisplayList(false);
-        }
+        // if (itemsInTodoList[0] !== '') {
+        //     setDisplayList(true);
+        // }
+        // else {
+        //     setDisplayList(false);
+        // }
     }, [itemsInTodoList]);
 
     const handleOnEdit = () => {

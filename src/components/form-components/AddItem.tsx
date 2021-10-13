@@ -7,7 +7,7 @@ import { cssExports } from '../styles/AddItemStyles.scss'
 
 // const cx = classNames.bind();
 type AppProps = {
-    handleAddNewItemToList: (paramNewItem: string) => void,
+    handleAddNewItemToList: (paramNewItem: Array<TodoItem>) => void,
 }
 /**
  * Thanks to the following for helping me out!

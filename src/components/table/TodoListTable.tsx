@@ -8,7 +8,7 @@ import TableRowItem from './TableRowItem';
 
 // const cx = classNames.bind();
 type AppProps = {
-    itemsInTodoList: Array<string>,
+    itemsInTodoList: Array<TodoItem>,
 }
 /**
  * Thanks to the following for helping me out!
