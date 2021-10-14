@@ -13,24 +13,10 @@ import TodoListTable from './table/TodoListTable';
  * @returns The Todo Application in its entirety.
  */
 function App() {
-    const [itemsInTodoList, setItemsInTodoList] = useState<Array<TodoItem>>();
+    const [itemsInTodoList, setItemsInTodoList] = useState<Array<TodoItem>>([]);
 
     const handleAddNewItemToList = (paramNewItem: string) => {
-        let oldListOfTodoItems = [...itemsInTodoList, new TodoItem(paramNewItem)];
         setItemsInTodoList([...itemsInTodoList, new TodoItem(paramNewItem)]);
-
-        setItemsInTodoList(oldListOfTodoItems);
-
-
-        // setItemsInTodoList[...itemsInTodoList, {
-        //     id=1,
-        //     title={ paramNewItem }
-        // }];
-        // if (itemsInTodoList[0] === '') {
-        //     setItemsInTodoList([paramNewItem]);
-        // } else {
-        //     setItemsInTodoList([...itemsInTodoList, paramNewItem]);
-        // }
     }
 
     return (
