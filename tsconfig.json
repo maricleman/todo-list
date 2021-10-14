@@ -9,6 +9,12 @@
             "react",
             "node"
         ] /* Type declaration files to be included in compilation. */,
+        "lib": [
+            "es5",
+            "es6",
+            "dom",
+            "dom.iterable"
+        ] /* Tells the compiler what interfaces to import while transpiling your code */,
         "module": "esNext" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
         "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
         "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
@@ -24,7 +30,8 @@
             "node_modules/@types"
         ] /* List of folders to include type definitions from. */,
         "strictNullChecks": true /* Enable strict null checks. */,
-        "allowJs": true /* Allow javascript files to be compiled. */
+        "allowJs": true /* Allow javascript files to be compiled. */,
+        "strictPropertyInitialization": false /* Do you want all properties to be initialized? */
     },
     "exclude": [
         "dist",

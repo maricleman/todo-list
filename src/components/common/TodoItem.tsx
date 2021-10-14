@@ -1,19 +1,8 @@
 class TodoItem {
-    public id: number;
-    public title: string;
+    id: number;
+    title: string;
 
-    constructor(public paramId: number, public paramTitle: string) {
-        this.id = paramId;
+    constructor(public paramTitle: string) {
         this.title = paramTitle;
     }
-
-    getTitle() {
-        return this.title;
-    }
 }
-
-// type TodoItem = {
-//     id: number,
-//     title: string,
-
-// }

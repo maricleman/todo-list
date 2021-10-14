@@ -15,10 +15,11 @@ import TodoListTable from './table/TodoListTable';
 function App() {
     const [itemsInTodoList, setItemsInTodoList] = useState<Array<TodoItem>>();
 
-    const handleAddNewItemToList = (paramNewItem: TodoItem) => {
-        let itemToAdd: TodoItem = new TodoItem(1, "");
+    const handleAddNewItemToList = (paramNewItem: string) => {
+        let oldListOfTodoItems = [...itemsInTodoList, new TodoItem(paramNewItem)];
+        setItemsInTodoList([...itemsInTodoList, new TodoItem(paramNewItem)]);
 
-        itemsInTodoList.push(paramNewItem);
+        setItemsInTodoList(oldListOfTodoItems);
 
 
         // setItemsInTodoList[...itemsInTodoList, {
