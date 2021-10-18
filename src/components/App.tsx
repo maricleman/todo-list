@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Title from './form-components/Title';
 import AddItem from './form-components/AddItem';
 import TodoListTable from './table/TodoListTable';
-// import TodoItem from './common/TodoItem';
+import { TodoItem } from './common/TodoItem';
 
 /**
  * I want to extend a thanks to this example for
@@ -16,7 +16,12 @@ function App() {
     const [itemsInTodoList, setItemsInTodoList] = useState<Array<TodoItem>>([]);
 
     const handleAddNewItemToList = (paramNewItem: string) => {
-        setItemsInTodoList([...itemsInTodoList, new TodoItem(paramNewItem)]);
+        let todoItem = new TodoItem('paramNewItem');
+        console.log('length?', itemsInTodoList.length);
+        if (itemsInTodoList.length === 0) {
+            todoItem.setId(0);
+        }
+        setItemsInTodoList([...itemsInTodoList, todoItem]);
     }
 
     return (
