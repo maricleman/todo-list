@@ -5,6 +5,7 @@ import { useInput } from '../hooks/useInput';
 import classNames from 'classnames/bind';
 import styles from '../styles/AddItemStyles.scss';
 import { cssExports } from '../styles/AddItemStyles.scss'
+import TodoItem from '../common/TodoItem';
 
 // const cx = classNames.bind();
 type AppProps = {
@@ -22,17 +23,7 @@ type AppProps = {
 export const TableRowItem: React.FC<AppProps> = (props) => {
     const { itemsInTodoList } = props;
     const stringResources = useContext(ResourceManager);
-    const [displayList, setDisplayList] = useState(false);
 
-
-    useEffect(() => {
-        // if (itemsInTodoList[0] !== '') {
-        //     setDisplayList(true);
-        // }
-        // else {
-        //     setDisplayList(false);
-        // }
-    }, [itemsInTodoList]);
 
     const handleOnEdit = () => {
         console.log('Time to edit!');
@@ -43,29 +34,24 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
     }
 
     return (
-        // <div className="todo-list">
-        //     {itemsInTodoList.map((item) => {
-        //         const { id, title } = item;
-        //         return (
-        //             <article className="todo-item" key={id}>
-        //                 <p className="title">{title}</p>
-        //                 <div className="btn-container">
-        //                     <button type="button" className="edit-btn" onClick={handleOnEdit}>
-        //                         <FaEdit />
-        //                     </button>
-        //                     <button type="button" className="delete-btn" onClick={handleOnDelete}>
-        //                         <FaTrash />
-        //                     </button>
-        //                 </div>
-        //             </article>
-        //         )
-        //     })}
-        // </div>
-        <ul style={{ display: displayList ? 'block' : 'none' }}>
-            {itemsInTodoList.map(function (name, index) {
-                return <li key={index}>{name}</li>;
+        <div className="todo-list">
+            {itemsInTodoList.map((item) => {
+                const { id, title } = item;
+                return (
+                    <article className="todo-item" key={id}>
+                        <p className="title">{title}</p>
+                        <div className="btn-container">
+                            <button type="button" className="edit-btn" onClick={handleOnEdit}>
+                                <FaEdit />
+                            </button>
+                            <button type="button" className="delete-btn" onClick={handleOnDelete}>
+                                <FaTrash />
+                            </button>
+                        </div>
+                    </article>
+                )
             })}
-        </ul>
+        </div>
     );
 }
 

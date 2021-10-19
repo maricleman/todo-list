@@ -1,4 +1,4 @@
-export class TodoItem {
+export default class TodoItem {
     id: string;
     title: string;
 
@@ -10,9 +10,9 @@ export class TodoItem {
         this.id = `todo-item: ${paramId}`;
     }
 
-    getNumericId() {
-        let numericId = this.id.split(":", 1);
-        console.log('numericId:', numericId);
+    getNumericId(): number {
+        const listOfItemsInTodoList = this.id.split(":", 2);
+        const numericId = parseInt(listOfItemsInTodoList[1]);  
         return numericId;
     }
 }

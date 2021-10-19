@@ -1,0 +1,21 @@
+.submitButton {
+    background: #2563eb;
+    border-color: transparent;
+    flex: 0 0 5rem;
+    display: grid;
+    align-items: center;
+    padding: 0.25rem;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    cursor: pointer;
+    color: white;
+    transition: var(--transition);
+    font-size: 0.85rem;
+  }
+  
+  .submitButton:hover {
+    background: #1543a5;
+    color: white;
+  }

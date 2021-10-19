@@ -1,9 +1,7 @@
 import React, { useState, useContext } from 'react'
 import ResourceManager from '../ResourceManager';
 import { useInput } from '../hooks/useInput';
-import classNames from 'classnames/bind';
-import styles from '../styles/AddItemStyles.scss';
-import { cssExports } from '../styles/AddItemStyles.scss'
+import styles from './AddItemStyles.scss';
 
 // const cx = classNames.bind();
 type AppProps = {
@@ -38,10 +36,7 @@ export const AddItem: React.FC<AppProps> = (props) => {
 
 
     return (
-        <form action="/" method="get" onSubmit={handleAddItemToList}>
-            <label htmlFor="add-item-label">
-                <span >What needs to be done?</span>
-            </label>
+        <form action="/" method="post" onSubmit={handleAddItemToList}>
             <input
                 type="text"
                 id="add-item"
@@ -51,7 +46,7 @@ export const AddItem: React.FC<AppProps> = (props) => {
                 onChange={event => setValue(event.target.value)}
             >
             </input>
-            <button type="submit">Add</button>
+            <button type="submit" className={styles.submitButton}>Add</button>
         </form>
     );
 }
