@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/79d480c0-0613-4198-8cf1-05c234c747e5/resourceGroups/rg-todo-list/providers/Microsoft.Web/sites/maricle-todo-list",
+    "appService.deploySubpath": "."
+}
