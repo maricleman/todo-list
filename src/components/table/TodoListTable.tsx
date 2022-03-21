@@ -10,6 +10,7 @@ import TodoItem from '../common/TodoItem';
 // const cx = classNames.bind();
 type AppProps = {
     itemsInTodoList: Array<TodoItem>,
+    handleDeletingItemInToDoList: Function
 }
 /**
  * Thanks to the following for helping me out!
@@ -21,7 +22,7 @@ type AppProps = {
 
 
 export const TodoListTable: React.FC<AppProps> = (props) => {
-    const { itemsInTodoList } = props;
+    const { itemsInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
 
 
@@ -30,6 +31,7 @@ export const TodoListTable: React.FC<AppProps> = (props) => {
     return (
         <TableRowItem
             itemsInTodoList={itemsInTodoList}
+            handleDeletingItemInToDoList={handleDeletingItemInToDoList}
         />
     );
 }

@@ -26,6 +26,16 @@ function App() {
         setItemsInTodoList([...itemsInTodoList, todoItem]);
     }
 
+    const handleDeletingItemInToDoList = (idToDelete: number) => {
+        let newItemsInTodoList = Array<TodoItem>();
+        itemsInTodoList.forEach((item) => {
+            if (item.getNumericId() !== idToDelete) {
+                newItemsInTodoList.push(item);
+            }
+            setItemsInTodoList(newItemsInTodoList);
+        });
+    }
+
     return (
         <div>
             <Title />
@@ -34,6 +44,7 @@ function App() {
             />
             <TodoListTable
                 itemsInTodoList={itemsInTodoList}
+                handleDeletingItemInToDoList={handleDeletingItemInToDoList}
             />
         </div>
     );

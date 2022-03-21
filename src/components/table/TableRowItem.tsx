@@ -10,6 +10,7 @@ import TodoItem from '../common/TodoItem';
 // const cx = classNames.bind();
 type AppProps = {
     itemsInTodoList: Array<TodoItem>,
+    handleDeletingItemInToDoList: Function
 }
 /**
  * Thanks to the following for helping me out!
@@ -21,7 +22,7 @@ type AppProps = {
 
 
 export const TableRowItem: React.FC<AppProps> = (props) => {
-    const { itemsInTodoList } = props;
+    let { itemsInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
 
 
@@ -29,9 +30,19 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
         console.log('Time to edit!');
     };
 
-    const handleOnDelete = () => {
-        console.log('Time to delete!');
-    }
+    // const handleOnDelete = (item: TodoItem) => {
+    //     console.log('Time to delete!');
+    //     console.log('ID: ', item.getNumericId());
+    //     let idToDelete = item.getNumericId();
+    //     let newItemsInTodoList = Array<TodoItem>();
+    //     itemsInTodoList.forEach((item) => {
+    //         if (item.getNumericId() !== idToDelete) {
+    //             newItemsInTodoList.push(item);
+    //         }
+    //         console.log('newItems: ');
+    //         console.log(newItemsInTodoList);
+    //     });
+    // }
 
     return (
         <div className="todo-list">
@@ -44,7 +55,7 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
                             <button type="button" className="edit-btn" onClick={handleOnEdit}>
                                 <FaEdit />
                             </button>
-                            <button type="button" className="delete-btn" onClick={handleOnDelete}>
+                            <button type="button" className="delete-btn" onClick={() => handleDeletingItemInToDoList(item.getNumericId())}>
                                 <FaTrash />
                             </button>
                         </div>
