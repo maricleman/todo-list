@@ -31,6 +31,7 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
 
     const handleOnDelete = () => {
         console.log('Time to delete!');
+        console.log('Time to delete!');
     }
 
     return (
