@@ -25,7 +25,6 @@ export const AddItem: React.FC<AppProps> = (props) => {
     const [openModal, setOpenModal] = useState(false);
     const [modalSubtitle, setModalSubtitle] = useState('');
     let subtitle;
-
     /**
      * Captures the item the user submitted
      * and passes it up for the parent component
@@ -108,8 +107,8 @@ export const AddItem: React.FC<AppProps> = (props) => {
                 style={modalStyles}
                 contentLabel="Empty Content Modal"
             >
-                <h2 style={{display: 'flex', justifyContent: 'center'}}>Empty input</h2>
-                <h4>Please enter a value before adding something to the list.</h4>
+                <h2 style={{display: 'flex', justifyContent: 'center'}}>{stringResources.modalEmptyInputHeader}</h2>
+                <h4>{stringResources.modalEmptyInputSubHeader}</h4>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <button style={closeModalButtonStyles} onClick={handleModalAfterClose}>close</button>
                 </div>
