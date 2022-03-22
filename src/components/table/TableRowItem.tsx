@@ -6,6 +6,7 @@ import classNames from 'classnames/bind';
 import styles from '../styles/AddItemStyles.scss';
 import { cssExports } from '../styles/AddItemStyles.scss'
 import TodoItem from '../common/TodoItem';
+import EditableTextItem from '../form-components/EditableTextItem';
 
 // const cx = classNames.bind();
 type AppProps = {
@@ -24,25 +25,14 @@ type AppProps = {
 export const TableRowItem: React.FC<AppProps> = (props) => {
     let { itemsInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
+    const [isEditable, setIsEditable] = useState(false);
 
 
-    const handleOnEdit = () => {
+    const handleOnEdit = (id: string) => {
         console.log('Time to edit!');
+        setIsEditable(true);
     };
 
-    // const handleOnDelete = (item: TodoItem) => {
-    //     console.log('Time to delete!');
-    //     console.log('ID: ', item.getNumericId());
-    //     let idToDelete = item.getNumericId();
-    //     let newItemsInTodoList = Array<TodoItem>();
-    //     itemsInTodoList.forEach((item) => {
-    //         if (item.getNumericId() !== idToDelete) {
-    //             newItemsInTodoList.push(item);
-    //         }
-    //         console.log('newItems: ');
-    //         console.log(newItemsInTodoList);
-    //     });
-    // }
 
     return (
         <div className="todo-list">
@@ -50,9 +40,9 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
                 const { id, title } = item;
                 return (
                     <article className="todo-item" key={id}>
-                        <p className="title">{title}</p>
+                        <EditableTextItem id={id} value={title} isEditable={isEditable} />
                         <div className="btn-container">
-                            <button type="button" className="edit-btn" onClick={handleOnEdit}>
+                            <button type="button" className="edit-btn" onClick={() => handleOnEdit(id)}>
                                 <FaEdit />
                             </button>
                             <button type="button" className="delete-btn" onClick={() => handleDeletingItemInToDoList(item.getNumericId())}>
