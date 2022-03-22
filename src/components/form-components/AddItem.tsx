@@ -20,11 +20,10 @@ type AppProps = {
 export const AddItem: React.FC<AppProps> = (props) => {
     const { handleAddNewItemToList } = props;
     const { value, setValue, reset } = useInput('');
-    const [newItemInList, setNewItemInList] = useState("");
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
-    const [modalSubtitle, setModalSubtitle] = useState('');
-    let subtitle;
+
+
     /**
      * Captures the item the user submitted
      * and passes it up for the parent component
@@ -42,9 +41,9 @@ export const AddItem: React.FC<AppProps> = (props) => {
             reset();
         }
     }
-      
-      // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-      Modal.setAppElement('#root');
+
+    // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+    Modal.setAppElement('#root');
 
     /**
      * Function to close the modal
@@ -54,22 +53,23 @@ export const AddItem: React.FC<AppProps> = (props) => {
         setOpenModal(false);
     }
 
-    const handleModalAfterOpen = (evt) => {
-        console.log('Modal is opened!');
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
-        subtitle = "Empty input";
-        setModalSubtitle('Empty input');
-    }
 
+    /**
+     * Custom modal styles.
+     * I tried putting these in the
+     * AddItemStyles.scss, but the
+     * react-modal library wanted
+     * an object instead of a CssStyles
+     * object.
+     */
     const modalStyles = {
         content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
         },
     };
 
@@ -85,34 +85,36 @@ export const AddItem: React.FC<AppProps> = (props) => {
         fontWeight: 600,
         outline: 0,
         padding: '10px',
-     };
+    };
 
 
     return (
         <form action="/" method="post" onSubmit={handleAddItemToList}>
-            <input
-                type="text"
-                id="add-item"
-                placeholder="Add item to list" /**Placeholders aren't accessible -- why we're doubling up. */
-                name="add-item"
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            >
-            </input>
-            <button type="submit" className={styles.submitButton}>Add</button>
+            <div className={styles.inputElements}>
+                <input
+                    type="text"
+                    id="add-item"
+                    placeholder={stringResources.todoTextBoxPlaceholder} /**Placeholders aren't accessible -- why we're doubling up. */
+                    name="add-item"
+                    value={value}
+                    className={styles.textBox}
+                    onChange={event => setValue(event.target.value)}
+                >
+                </input>
+                <button type="submit" className={styles.submitButton}>Add</button>
+            </div>
             <Modal
                 isOpen={openModal}
-                onAfterOpen={handleModalAfterOpen}
                 onRequestClose={handleModalAfterClose}
                 style={modalStyles}
                 contentLabel="Empty Content Modal"
             >
-                <h2 style={{display: 'flex', justifyContent: 'center'}}>{stringResources.modalEmptyInputHeader}</h2>
+                <h2 style={{ display: 'flex', justifyContent: 'center' }}>{stringResources.modalEmptyInputHeader}</h2>
                 <h4>{stringResources.modalEmptyInputSubHeader}</h4>
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <button style={closeModalButtonStyles} onClick={handleModalAfterClose}>close</button>
                 </div>
-                
+
             </Modal>
         </form>
     );

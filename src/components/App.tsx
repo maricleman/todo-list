@@ -3,6 +3,7 @@ import Title from './form-components/Title';
 import AddItem from './form-components/AddItem';
 import TodoListTable from './table/TodoListTable';
 import TodoItem from './common/TodoItem';
+import styles from './AppStyles.scss';
 
 /**
  * I want to extend a thanks to this example for
@@ -37,7 +38,7 @@ function App() {
     }
 
     return (
-        <div>
+        <div className={styles.mainContent}>
             <Title />
             <AddItem
                 handleAddNewItemToList={handleAddNewItemToList}

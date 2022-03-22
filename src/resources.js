@@ -1,6 +1,12 @@
 export default {
-title: 'Todo List:',
-subtitle: 'What needs to be done?',
+
+//Title.tsx
+title: 'To Do List',
+
+//AddItem.tsx
+todoTextBoxPlaceholder: 'What needs to be done?',
+
+// Modal Text
 modalEmptyInputHeader: 'Empty input',
 modalEmptyInputSubHeader: 'Please enter a value before adding something to the list.'
 };
