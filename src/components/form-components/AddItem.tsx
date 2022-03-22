@@ -70,6 +70,11 @@ export const AddItem: React.FC<AppProps> = (props) => {
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
+            borderRadius: '1rem',
+            display: 'grid',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(255, 255, 255, 0.25)',
         },
     };
 
