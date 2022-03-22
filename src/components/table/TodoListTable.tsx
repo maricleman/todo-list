@@ -24,14 +24,16 @@ export const TodoListTable: React.FC<AppProps> = (props) => {
     const { itemsInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
 
-
-
-
     return (
-        <TableRowItem
-            itemsInTodoList={itemsInTodoList}
-            handleDeletingItemInToDoList={handleDeletingItemInToDoList}
-        />
+        <>
+            {itemsInTodoList.map((item) => {
+            <TableRowItem
+                itemInTodoList={item}
+                handleDeletingItemInToDoList={handleDeletingItemInToDoList}
+            />
+            })}
+        </>
+
     );
 }
 

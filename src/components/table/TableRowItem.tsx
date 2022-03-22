@@ -10,7 +10,7 @@ import EditableTextItem from '../form-components/EditableTextItem';
 
 // const cx = classNames.bind();
 type AppProps = {
-    itemsInTodoList: Array<TodoItem>,
+    itemInTodoList: TodoItem,
     handleDeletingItemInToDoList: Function
 }
 /**
@@ -23,7 +23,7 @@ type AppProps = {
 
 
 export const TableRowItem: React.FC<AppProps> = (props) => {
-    let { itemsInTodoList, handleDeletingItemInToDoList } = props;
+    let { itemInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
     const [isEditable, setIsEditable] = useState(false);
 
@@ -33,25 +33,19 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
         setIsEditable(true);
     };
 
-
     return (
         <div className="todo-list">
-            {itemsInTodoList.map((item) => {
-                const { id, title } = item;
-                return (
-                    <article className="todo-item" key={id}>
-                        <EditableTextItem id={id} value={title} isEditable={isEditable} />
-                        <div className="btn-container">
-                            <button type="button" className="edit-btn" onClick={() => handleOnEdit(id)}>
-                                <FaEdit />
-                            </button>
-                            <button type="button" className="delete-btn" onClick={() => handleDeletingItemInToDoList(item.getNumericId())}>
-                                <FaTrash />
-                            </button>
-                        </div>
-                    </article>
-                )
-            })}
+            <article className="todo-item" key={itemInTodoList.id}>
+                <EditableTextItem id={itemInTodoList.id} value={itemInTodoList.title} isEditable={isEditable} />
+                <div className="btn-container">
+                    <button type="button" className="edit-btn" onClick={() => handleOnEdit(itemInTodoList.id)}>
+                        <FaEdit />
+                    </button>
+                    <button type="button" className="delete-btn" onClick={() => handleDeletingItemInToDoList(itemInTodoList.getNumericId())}>
+                        <FaTrash />
+                    </button>
+                </div>
+            </article>
         </div>
     );
 }
