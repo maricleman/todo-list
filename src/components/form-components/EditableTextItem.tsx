@@ -6,43 +6,70 @@ import classNames from 'classnames/bind';
 import styles from '../styles/AddItemStyles.scss';
 import { cssExports } from '../styles/AddItemStyles.scss'
 import TodoItem from '../common/TodoItem';
+import NoticeModal from '../common/NoticeModal'
 
-// const cx = classNames.bind();
+
 type AppProps = {
     todoItem: TodoItem
-    isEditable: boolean
-}
-
-const handleEditItem = (value: string, item: TodoItem) => {
-    console.log('dummy function');
-    item.setTitle(value);
+    isEditable: boolean,
+    value: string,
+    setValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 
 
 export const EditableTextItem: React.FC<AppProps> = (props) => {
-    let { todoItem, isEditable } = props;
+    let { todoItem, isEditable, value, setValue } = props;
     const stringResources = useContext(ResourceManager);
+    const [openModal, setOpenModal] = useState(false);
+    // const { value, setValue, reset } = useInput('');
+
+    /**
+     * Handle editing a single instance of
+     * the Todo item
+     * @param value 
+     * @param item 
+     */
+    // const handleEditItem = (evt) => {
+    //     evt.preventDefault();
+    //     // if (value == '') {
+    //         setOpenModal(true);
+    //     // } else {
+    //         setName(evt.value);
+    //         todoItem.setTitle(evt.value);
+    //     // }
+    // }
+
+    // const handleSubmit = (evt) => {
+
+    // }
+
+    /**
+     * Function to close the modal
+     */
+    const handleModalAfterClose = () => {
+        setOpenModal(false);
+    }
 
     if (isEditable) {
         return (
-            <>
-                {/* <form action="/" method="post" onSubmit={handleAddItemToList}> */}
-                    <div>
-                        <input
-                            type="text"
-                            id="add-item"
-                            placeholder={stringResources.todoTextBoxPlaceholder} /**Placeholders aren't accessible -- why we're doubling up. */
-                            name="add-item"
-                            value={todoItem.title}
-                            // className={styles.textBox}
-                            onChange={event => handleEditItem(event.target.value, todoItem)}
-                        >
-                        </input>
-                        <button type="submit">Add</button>
-                    </div>
-                {/* </form> */}
-            </>
+            <div>
+                <input
+                    type="text"
+                    id="add-item"
+                    name="add-item"
+                    value={value}
+                    // className={styles.textBox}
+                    onChange={event => setValue(event.target.value)}
+                >
+                </input>
+                <NoticeModal
+                    isOpen={openModal}
+                    handleAfterClose={handleModalAfterClose}
+                    header={stringResources.modalEmptyInputHeader}
+                    subHeader={stringResources.modalEmptyInputSubHeader}
+                />
+            </div>
         );
     } else {
         return (

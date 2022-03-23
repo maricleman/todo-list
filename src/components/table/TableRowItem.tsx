@@ -26,7 +26,12 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
     let { itemInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
     const [isEditable, setIsEditable] = useState(false);
+    const [value, setValue] = useState(itemInTodoList.title);
 
+
+    useEffect(() => {
+        itemInTodoList.setTitle(value);
+    }, [isEditable]);
 
     const handleOnEdit = (id: string) => {
         console.log('Time to edit!');
@@ -36,7 +41,12 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
     return (
         <div className="todo-list">
             <article className="todo-item" key={itemInTodoList.id}>
-                <EditableTextItem todoItem={itemInTodoList} isEditable={isEditable} />
+                <EditableTextItem 
+                    todoItem={itemInTodoList} 
+                    isEditable={isEditable}
+                    value={value}
+                    setValue={setValue} 
+                />
                 <div className="btn-container">
                     <button type="button" className="edit-btn" onClick={() => handleOnEdit(itemInTodoList.id)}>
                         <FaEdit />

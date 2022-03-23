@@ -3,12 +3,15 @@ import ResourceManager from '../ResourceManager';
 import Modal from 'react-modal';
 
 type AppProps = {
-    handleAddNewItemToList: (paramNewItem: string) => void,
+    isOpen: boolean,
+    handleAfterClose: () => void,
+    header: string, 
+    subHeader: string
 }
 
 
-export const AddItem: React.FC<AppProps> = (props) => {
-    const { handleAddNewItemToList } = props;
+export const NoticeModal: React.FC<AppProps> = (props) => {
+    const { isOpen, handleAfterClose, header, subHeader } = props;
     const stringResources = useContext(ResourceManager);
 
     // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
@@ -55,15 +58,15 @@ export const AddItem: React.FC<AppProps> = (props) => {
 
     return (
             <Modal
-                isOpen={openModal}
-                onRequestClose={handleModalAfterClose}
+                isOpen={isOpen}
+                onRequestClose={handleAfterClose}
                 style={modalStyles}
                 contentLabel="Empty Content Modal"
             >
-                <h2 style={{ display: 'flex', justifyContent: 'center' }}>{stringResources.modalEmptyInputHeader}</h2>
-                <h4>{stringResources.modalEmptyInputSubHeader}</h4>
+                <h2 style={{ display: 'flex', justifyContent: 'center' }}>{header}</h2>
+                <h4>{subHeader}</h4>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button style={closeModalButtonStyles} onClick={handleModalAfterClose}>close</button>
+                    <button style={closeModalButtonStyles} onClick={handleAfterClose}>close</button>
                 </div>
 
             </Modal>

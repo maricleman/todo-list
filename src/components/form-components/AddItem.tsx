@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import ResourceManager from '../ResourceManager';
 import { useInput } from '../hooks/useInput';
 import styles from './AddItemStyles.scss';
+import NoticeModal from '../common/NoticeModal'
 
 
 // const cx = classNames.bind();
@@ -45,14 +46,13 @@ export const AddItem: React.FC<AppProps> = (props) => {
 
     /**
      * Function to close the modal
-     * @param evt 
      */
-    const handleModalAfterClose = (evt) => {
+    const handleModalAfterClose = () => {
         setOpenModal(false);
     }
 
 
-   
+
 
     return (
         <form action="/" method="post" onSubmit={handleAddItemToList}>
@@ -69,6 +69,12 @@ export const AddItem: React.FC<AppProps> = (props) => {
                 </input>
                 <button type="submit" className={styles.submitButton}>Add</button>
             </div>
+            <NoticeModal
+                isOpen={openModal}
+                handleAfterClose={handleModalAfterClose}
+                header={stringResources.modalEmptyInputHeader}
+                subHeader={stringResources.modalEmptyInputSubHeader}
+            />
         </form>
     );
 }

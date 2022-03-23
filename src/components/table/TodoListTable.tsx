@@ -28,6 +28,7 @@ export const TodoListTable: React.FC<AppProps> = (props) => {
         <>
             {itemsInTodoList.map((item) => (
                 <TableRowItem
+                    key={item.id}
                     itemInTodoList={item}
                     handleDeletingItemInToDoList={handleDeletingItemInToDoList}
                 />
