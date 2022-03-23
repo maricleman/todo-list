@@ -7,6 +7,7 @@ import styles from '../styles/AddItemStyles.scss';
 import { cssExports } from '../styles/AddItemStyles.scss'
 import TodoItem from '../common/TodoItem';
 import EditableTextItem from '../form-components/EditableTextItem';
+import NoticeModal from '../common/NoticeModal'
 
 // const cx = classNames.bind();
 type AppProps = {
@@ -29,11 +30,25 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
 
     const [isEditable, setIsEditable] = useState(false);
     const [value, setValue] = useState(itemInTodoList.title);
+    const [openModal, setOpenModal] = useState(false);
 
+    /**
+     * Function to close the modal
+     */
+    const handleModalAfterClose = () => {
+        setOpenModal(false);
+    }
 
     useEffect(() => {
-        itemInTodoList.setTitle(value);
-        forceReRender();
+        // Force the user to enter a value that isn't null
+        if (value == '') {
+            setOpenModal(true);
+            setValue(itemInTodoList.title);
+            setIsEditable(true);
+        } else {
+            itemInTodoList.setTitle(value);
+            forceReRender();
+        }
     }, [isEditable]);
 
     const handleOnEdit = (id: string) => {
@@ -43,11 +58,11 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
     return (
         <div className="todo-list">
             <article className="todo-item" key={itemInTodoList.id}>
-                <EditableTextItem 
-                    todoItem={itemInTodoList} 
+                <EditableTextItem
+                    todoItem={itemInTodoList}
                     isEditable={isEditable}
                     value={value}
-                    setValue={setValue} 
+                    setValue={setValue}
                 />
                 <div className="btn-container">
                     <button type="button" className="edit-btn" onClick={() => handleOnEdit(itemInTodoList.id)}>
@@ -58,6 +73,12 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
                     </button>
                 </div>
             </article>
+            <NoticeModal
+                isOpen={openModal}
+                handleAfterClose={handleModalAfterClose}
+                header={stringResources.modalEmptyInputHeader}
+                subHeader={stringResources.modalEmptyValueSubheader}
+            />
         </div>
     );
 }

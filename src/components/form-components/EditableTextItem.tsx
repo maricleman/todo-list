@@ -22,27 +22,6 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
     let { todoItem, isEditable, value, setValue } = props;
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
-    // const { value, setValue, reset } = useInput('');
-
-    /**
-     * Handle editing a single instance of
-     * the Todo item
-     * @param value 
-     * @param item 
-     */
-    // const handleEditItem = (evt) => {
-    //     evt.preventDefault();
-    //     // if (value == '') {
-    //         setOpenModal(true);
-    //     // } else {
-    //         setName(evt.value);
-    //         todoItem.setTitle(evt.value);
-    //     // }
-    // }
-
-    // const handleSubmit = (evt) => {
-
-    // }
 
     /**
      * Function to close the modal
@@ -59,7 +38,6 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
                     id="add-item"
                     name="add-item"
                     value={value}
-                    // className={styles.textBox}
                     onChange={event => setValue(event.target.value)}
                 >
                 </input>
