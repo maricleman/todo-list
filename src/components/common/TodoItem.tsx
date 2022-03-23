@@ -6,13 +6,17 @@ export default class TodoItem {
         this.title = paramTitle;
     }
 
+    setTitle(newTitle: string) {
+        this.title = newTitle;
+    }
+
     setId(paramId: number) {
         this.id = `todo-item: ${paramId}`;
     }
 
     getNumericId(): number {
         const listOfItemsInTodoList = this.id.split(":", 2);
-        const numericId = parseInt(listOfItemsInTodoList[1]);  
+        const numericId = parseInt(listOfItemsInTodoList[1]);
         return numericId;
     }
 }

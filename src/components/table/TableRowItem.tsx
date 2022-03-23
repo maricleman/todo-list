@@ -30,13 +30,13 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
 
     const handleOnEdit = (id: string) => {
         console.log('Time to edit!');
-        setIsEditable(true);
+        setIsEditable(!isEditable);
     };
 
     return (
         <div className="todo-list">
             <article className="todo-item" key={itemInTodoList.id}>
-                <EditableTextItem id={itemInTodoList.id} value={itemInTodoList.title} isEditable={isEditable} />
+                <EditableTextItem todoItem={itemInTodoList} isEditable={isEditable} />
                 <div className="btn-container">
                     <button type="button" className="edit-btn" onClick={() => handleOnEdit(itemInTodoList.id)}>
                         <FaEdit />
