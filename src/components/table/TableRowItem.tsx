@@ -3,7 +3,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import ResourceManager from '../ResourceManager';
 import { useInput } from '../hooks/useInput';
 import classNames from 'classnames/bind';
-import styles from '../styles/AddItemStyles.scss';
+import styles from './TableRowItemStyles.scss';
 import { cssExports } from '../styles/AddItemStyles.scss'
 import TodoItem from '../common/TodoItem';
 import EditableTextItem from '../form-components/EditableTextItem';
@@ -27,7 +27,6 @@ type AppProps = {
 export const TableRowItem: React.FC<AppProps> = (props) => {
     let { itemInTodoList, handleDeletingItemInToDoList, forceReRender } = props;
     const stringResources = useContext(ResourceManager);
-
     const [isEditable, setIsEditable] = useState(false);
     const [value, setValue] = useState(itemInTodoList.title);
     const [openModal, setOpenModal] = useState(false);
@@ -56,15 +55,15 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
     };
 
     return (
-        <div className="todo-list">
-            <article className="todo-item" key={itemInTodoList.id}>
+        <div className={styles.toDoItem}>
+            <article key={itemInTodoList.id}>
                 <EditableTextItem
                     todoItem={itemInTodoList}
                     isEditable={isEditable}
                     value={value}
                     setValue={setValue}
                 />
-                <div className="btn-container">
+                <div className={styles.toDoItem}>
                     <button type="button" className="edit-btn" onClick={() => handleOnEdit(itemInTodoList.id)}>
                         <FaEdit />
                     </button>
