@@ -23,6 +23,16 @@ type AppProps = {
 export const TodoListTable: React.FC<AppProps> = (props) => {
     const { itemsInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
+    const [value, setValue] = useState(0);
+
+    /**
+     * Cause this component to re-render
+     * its state every time the user is
+     * done editing a task.
+     */
+    const forceReRender = () => {
+        setValue(value + 1);
+    }
 
     return (
         <>
@@ -31,10 +41,10 @@ export const TodoListTable: React.FC<AppProps> = (props) => {
                     key={item.id}
                     itemInTodoList={item}
                     handleDeletingItemInToDoList={handleDeletingItemInToDoList}
+                    forceReRender={forceReRender}
                 />
             ))}
         </>
-
     );
 }
 
