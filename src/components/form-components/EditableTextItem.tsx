@@ -51,7 +51,7 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
         );
     } else {
         return (
-            <p>{todoItem.title}</p>
+            <p>{value}</p>
         );
     }
 

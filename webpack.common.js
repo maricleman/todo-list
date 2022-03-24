@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
 
   // Specify where the root of the application lies.
-  entry: './src/index.tsx',
+  entry: "./src/index.tsx",
 
   // Where files should be sent once they are bundled
  output: {

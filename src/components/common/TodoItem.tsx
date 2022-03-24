@@ -7,7 +7,6 @@ export default class TodoItem {
     }
 
     setTitle(newTitle: string) {
-        console.log('Setting the title!');
         this.title = newTitle;
     }
 

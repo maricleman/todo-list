@@ -13,7 +13,6 @@ import NoticeModal from '../common/NoticeModal'
 type AppProps = {
     itemInTodoList: TodoItem,
     handleDeletingItemInToDoList: Function,
-    forceReRender: Function
 }
 /**
  * Thanks to the following for helping me out!
@@ -25,7 +24,7 @@ type AppProps = {
 
 
 export const TableRowItem: React.FC<AppProps> = (props) => {
-    let { itemInTodoList, handleDeletingItemInToDoList, forceReRender } = props;
+    let { itemInTodoList, handleDeletingItemInToDoList } = props;
     const stringResources = useContext(ResourceManager);
     const [isEditable, setIsEditable] = useState(false);
     const [value, setValue] = useState(itemInTodoList.title);
@@ -46,7 +45,6 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
             setIsEditable(true);
         } else {
             itemInTodoList.setTitle(value);
-            forceReRender();
         }
     }, [isEditable]);
 
