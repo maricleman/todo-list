@@ -64,7 +64,10 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
                     setValue={setValue}
                 />
                 <div className={styles.toDoItem}>
-                    <button type="button" className="edit-btn" onClick={() => handleOnEdit(itemInTodoList.id)}>
+                    <button type="button" style={{ display: isEditable ? 'flex' : 'none' }} onClick={() => handleOnEdit(itemInTodoList.id)}>
+                        Save
+                    </button>
+                    <button type="button" style={{ display: isEditable ? 'none' : 'flex' }} onClick={() => handleOnEdit(itemInTodoList.id)}>
                         <FaEdit />
                     </button>
                     <button type="button" className="delete-btn" onClick={() => handleDeletingItemInToDoList(itemInTodoList.getNumericId())}>
