@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import ResourceManager from '../ResourceManager';
 import Modal from 'react-modal';
 
 type AppProps = {
     isOpen: boolean,
     handleAfterClose: () => void,
-    header: string, 
+    header: string,
     subHeader: string
 }
 
@@ -13,19 +13,21 @@ type AppProps = {
 export const NoticeModal: React.FC<AppProps> = (props) => {
     const { isOpen, handleAfterClose, header, subHeader } = props;
     const stringResources = useContext(ResourceManager);
+    // You must specify a type w/ useRef in order for this to work.
+    const closeButton = useRef<any>();
 
     // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
     Modal.setAppElement('#root');
 
-     /**
-     * Custom modal styles.
-     * I tried putting these in the
-     * AddItemStyles.scss, but the
-     * react-modal library wanted
-     * an object instead of a CssStyles
-     * object.
-     */
-      const modalStyles = {
+    /**
+    * Custom modal styles.
+    * I tried putting these in the
+    * AddItemStyles.scss, but the
+    * react-modal library wanted
+    * an object instead of a CssStyles
+    * object.
+    */
+    const modalStyles = {
         content: {
             top: '50%',
             left: '50%',
@@ -55,21 +57,30 @@ export const NoticeModal: React.FC<AppProps> = (props) => {
         padding: '10px',
     };
 
+    const handleKeyPress = e => {
+        e.preventDefault();
+        // Did the user press the enter key?
+        if (e.keyCode === 13) {
+            // If so, close the modal
+            closeButton.current.click();
+        }
+    }
 
     return (
+        <div onKeyDown={handleKeyPress}>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={handleAfterClose}
                 style={modalStyles}
-                contentLabel="Empty Content Modal"
+                contentLabel="Notice Modal"
             >
                 <h2 style={{ display: 'flex', justifyContent: 'center' }}>{header}</h2>
                 <h4>{subHeader}</h4>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button style={closeModalButtonStyles} onClick={handleAfterClose}>close</button>
+                    <button style={closeModalButtonStyles} onClick={handleAfterClose} ref={closeButton}>close</button>
                 </div>
-
             </Modal>
+        </div>
     );
 }
 

@@ -51,9 +51,6 @@ export const AddItem: React.FC<AppProps> = (props) => {
         setOpenModal(false);
     }
 
-
-
-
     return (
         <form action="/" method="post" onSubmit={handleAddItemToList}>
             <div className={styles.inputElements}>
