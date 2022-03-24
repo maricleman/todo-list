@@ -35,12 +35,11 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
 
     const handleKeyStroke = e => {
         e.preventDefault();
-        
+
         /**
          * Don't do anything if the
          * user just closed out of the modal!
          */
-        console.log('userJustClosedModal? ', userJustClosedModal);
         if (userJustClosedModal === true) {
             handleSetUserJustClosedModal(false);
         } else {
@@ -50,7 +49,7 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
                 saveButton.click();
             }
         }
-        
+
     }
 
     if (isEditable) {
