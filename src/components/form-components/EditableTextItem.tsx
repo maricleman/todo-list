@@ -13,13 +13,16 @@ type AppProps = {
     todoItem: TodoItem
     isEditable: boolean,
     value: string,
-    setValue: React.Dispatch<React.SetStateAction<string>>
+    setValue: React.Dispatch<React.SetStateAction<string>>,
+    saveButton: any,
+    userJustClosedModal: boolean,
+    handleSetUserJustClosedModal: Function
 }
 
 
 
 export const EditableTextItem: React.FC<AppProps> = (props) => {
-    let { todoItem, isEditable, value, setValue } = props;
+    let { todoItem, isEditable, value, setValue, saveButton, userJustClosedModal, handleSetUserJustClosedModal } = props;
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
 
@@ -30,14 +33,36 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
         setOpenModal(false);
     }
 
+    const handleKeyStroke = e => {
+        e.preventDefault();
+        
+        /**
+         * Don't do anything if the
+         * user just closed out of the modal!
+         */
+        console.log('userJustClosedModal? ', userJustClosedModal);
+        if (userJustClosedModal === true) {
+            handleSetUserJustClosedModal(false);
+        } else {
+            // User press enter key?
+            if (e.keyCode === 13) {
+                // If so, save changes
+                saveButton.click();
+            }
+        }
+        
+    }
+
     if (isEditable) {
         return (
             <div>
                 <input
                     type="text"
-                    id="add-item"
-                    name="add-item"
+                    id="edit-item-text-box"
+                    name="edit-item-text-box"
+                    autoFocus={true}
                     value={value}
+                    onKeyUp={handleKeyStroke}
                     onChange={event => setValue(event.target.value)}
                 >
                 </input>

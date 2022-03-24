@@ -56,7 +56,7 @@ export const AddItem: React.FC<AppProps> = (props) => {
             <div className={styles.inputElements}>
                 <input
                     type="text"
-                    id="add-item"
+                    id="add-item-text-box"
                     placeholder={stringResources.todoTextBoxPlaceholder} /**Placeholders aren't accessible -- why we're doubling up. */
                     name="add-item"
                     value={value}
