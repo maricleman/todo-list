@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import styles from './TableRowItemStyles.scss';
 import { cssExports } from '../styles/AddItemStyles.scss'
 import TodoItem from '../common/TodoItem';
-import EditableTextItem from '../form-components/EditableTextItem';
+import EditableTextItem from './EditableTextItem';
 import NoticeModal from '../common/NoticeModal'
 
 // const cx = classNames.bind();

@@ -12,6 +12,12 @@ modalEmptyInputSubHeader: 'Please enter a value before adding something to the l
 
 
 // TableRowItem.tsx
-modalEmptyValueSubheader: 'Please enter a value to continue'
+modalEmptyValueSubheader: 'Please enter a value to continue',
+
+// SignInButton.tsx
+SignInBtnText: 'Sign In',
+SignOutBtnText: 'Sign Out'
 
 };
+
+

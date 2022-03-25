@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import ResourceManager from '../ResourceManager';
 import { useInput } from '../hooks/useInput';
 import styles from './AddItemStyles.scss';
@@ -23,6 +23,7 @@ export const AddItem: React.FC<AppProps> = (props) => {
     const { value, setValue, reset } = useInput('');
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
+    const addItemTextBox = useRef<any>();
 
 
     /**
@@ -39,6 +40,7 @@ export const AddItem: React.FC<AppProps> = (props) => {
             setOpenModal(true);
         } else {
             handleAddNewItemToList(value);
+            addItemTextBox.current.focus();
             reset();
         }
     }
@@ -57,6 +59,7 @@ export const AddItem: React.FC<AppProps> = (props) => {
                 <input
                     type="text"
                     id="add-item-text-box"
+                    ref={addItemTextBox}
                     placeholder={stringResources.todoTextBoxPlaceholder} /**Placeholders aren't accessible -- why we're doubling up. */
                     name="add-item"
                     value={value}
