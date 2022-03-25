@@ -14,7 +14,7 @@ export const msalConfig = {
     auth: {
         clientId: "2debf791-a717-477c-9f29-3cf6833d90ef",
         authority: "https://login.microsoftonline.com/common",
-        redirectUri: "http://localhost:3000"
+        redirectUri: "https://maricle-todo-list.azurewebsites.net/"
     },
     cache: {
         cacheLocation: "sessionStorage", // This configures where your cache will be stored
