@@ -13,8 +13,14 @@ import { LogLevel } from "@azure/msal-browser";
 export const msalConfig = {
     auth: {
         clientId: "2debf791-a717-477c-9f29-3cf6833d90ef",
-        authority: "https://login.microsoftonline.com/common",
-        redirectUri: "https://maricle-todo-list.azurewebsites.net/"
+        /**
+         * Thanks to the following link for helping me form the authority URL.
+         * URL: https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-aad-b2c-considerations#authority-for-an-azure-ad-b2c-tenant-and-policy
+         */
+        authority: "https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp", //"https://login.microsoftonline.com/common",
+        // redirectUri: "http://localhost:3000/", 
+        redirectUri: "https://maricle-todo-list.azurewebsites.net/",
+        knownAuthorities: ["https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp"] 
     },
     cache: {
         cacheLocation: "sessionStorage", // This configures where your cache will be stored
@@ -52,7 +58,11 @@ export const msalConfig = {
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
 export const loginRequest = {
-    scopes: ["User.Read"]
+    /**
+     * This should be openid -- not Login.Open
+     * as the Microsoft template makes you think it should be.
+     */
+    scopes: ["openid"]
 };
 
 /**
