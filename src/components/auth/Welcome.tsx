@@ -3,9 +3,14 @@ import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
 import { callMsGraph } from "./graph";
 import styles from './WelcomeStyles.scss';
+import UserInfo from '../common/UserInfo';
 
+interface AppProps {
+    handleAddingUserProfileInfo: Function
+};
 
-export const Welcome: React.FC = () => {
+export const Welcome: React.FC<AppProps> = (props) => {
+    const { handleAddingUserProfileInfo } = props;
     const { instance, accounts } = useMsal();
     const [profileData, setProfileData] = useState(null);
     const [userName, setUserName] = useState('');
@@ -28,27 +33,25 @@ export const Welcome: React.FC = () => {
         const myIdTokenClaims = accounts[0]?.idTokenClaims;
         if (myIdTokenClaims != null || typeof (myIdTokenClaims) !== 'undefined') {
             const validIdToken = myIdTokenClaims;
-            let givenName = "";
+            let displayName = "";
+            let email = "";
+            let activeDirectoryId = "";
             Object.keys(validIdToken).map(function (key) {
-                if (key === 'given_name') {
-                    givenName = validIdToken[key];
+                if (key === 'name') {
+                    displayName = validIdToken[key];
+                }
+                if (key === 'emails') {
+                    email = validIdToken[key][0];
+                }
+                if (key === 'oid') {
+                    activeDirectoryId = validIdToken[key];
                 }
             });
-            if (givenName !== "") {
-                setUserName(givenName);
+            if (displayName !== "") {
+                setUserName(displayName);
+                const userInfo = new UserInfo(activeDirectoryId, displayName, email);
+                handleAddingUserProfileInfo(userInfo);
             }
-
-        } else {
-            const nameOfUser = accounts[0]?.name;
-            if (nameOfUser !== null || typeof nameOfUser !== 'undefined') {
-                setUserName(nameOfUser as string);
-            } else {
-                const userName = accounts[0]?.username;
-                if (userName !== null || typeof userName !== 'undefined') {
-                    setUserName(userName as string);
-                }
-            }
-
         }
     }
 

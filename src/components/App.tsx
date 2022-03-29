@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
+import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 import Title from './Title';
 import AddItem from './form-components/AddItem';
 import TodoListTable from './table/TodoListTable';
 import TodoItem from './common/TodoItem';
 import styles from './AppStyles.scss';
 import Header from './Header';
-import { loginRequest } from "../authConfig";
-import { callMsGraph } from "./auth/graph";
-import { ProfileData}  from './auth/ProfileData';
 import Welcome from './auth/Welcome';
+import UserInfo from './common/UserInfo';
 
 /**
  * I want to extend a thanks to this example for
@@ -21,6 +19,7 @@ import Welcome from './auth/Welcome';
  */
 function App() {
     const [itemsInTodoList, setItemsInTodoList] = useState<Array<TodoItem>>([]);
+    const [userProfileInfo, setUserProfileInfo] = useState<UserInfo>();
 
     const handleAddNewItemToList = (paramNewItem: string) => {
         let todoItem = new TodoItem(paramNewItem);
@@ -44,35 +43,30 @@ function App() {
     }
 
     /**
- * Renders information about the signed-in user or a button to retrieve data about the user
- */
-const ProfileContent = () => {
-    const { instance, accounts } = useMsal();
-    const [graphData, setGraphData] = useState(null);
-
-    function RequestProfileData() {
-        // Silently acquires an access token which is then attached to a request for MS Graph data
-        instance.acquireTokenSilent({
-            ...loginRequest,
-            account: accounts[0]
-        }).then((response) => {
-            callMsGraph(response.accessToken).then(response => setGraphData(response));
-        });
+     * Handle adding the user's profile
+     * to the parent's state
+     * variable.
+     * @param userProfileInfo 
+     */
+    const handleAddingUserProfileInfo = (userProfileInfo: UserInfo) => {
+        setUserProfileInfo(userProfileInfo);
     }
 
-    return (
-        <>
-            <h5 className="card-title">Welcome {accounts[0].name}</h5>
-            <h5 className="card-title">Welcome {accounts[0].localAccountId}</h5>
-            <h5 className="card-title">Welcome {accounts[0].username}</h5>
-            {/* {graphData ? 
-                <ProfileData graphData={graphData} />
-                :
-                <button onClick={RequestProfileData}>Request Profile Information</button>
-            } */}
-        </>
-    );
-};
+    /**
+     * Handle saving the user's
+     * list of todo items
+     */
+    const handleSavingUsersTodoList = () => {
+        console.log('/**************************************************************/');
+        console.log('Info to save for user...');
+        console.log('ID: ', userProfileInfo?.UserActiveDirectoryID);
+        console.log('Name: ', userProfileInfo?.displayName);
+        console.log('Email: ', userProfileInfo?.Email);
+        itemsInTodoList.forEach((item) => {
+            console.log('todo item: ', item.title)
+        });
+        console.log('/**************************************************************/');
+    }
 
     /**
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
@@ -81,11 +75,13 @@ const ProfileContent = () => {
         <div className="App">
             <AuthenticatedTemplate>
                 <div className={styles.mainContainer}>
-                    <Welcome />
+                    <Welcome handleAddingUserProfileInfo={handleAddingUserProfileInfo} />
                     <Header />
                     <Title />
                     <AddItem
                         handleAddNewItemToList={handleAddNewItemToList}
+                        handleSavingUsersTodoList={handleSavingUsersTodoList}
+                        isUserLoggedIn={true}
                     />
                     <TodoListTable
                         itemsInTodoList={itemsInTodoList}
@@ -96,15 +92,17 @@ const ProfileContent = () => {
 
             <UnauthenticatedTemplate>
                 <div className={styles.mainContainer}>
-                        <Header />
-                        <Title />
-                        <AddItem
-                            handleAddNewItemToList={handleAddNewItemToList}
-                        />
-                        <TodoListTable
-                            itemsInTodoList={itemsInTodoList}
-                            handleDeletingItemInToDoList={handleDeletingItemInToDoList}
-                        />
+                    <Header />
+                    <Title />
+                    <AddItem
+                        handleAddNewItemToList={handleAddNewItemToList}
+                        handleSavingUsersTodoList={handleSavingUsersTodoList}
+                        isUserLoggedIn={false}
+                    />
+                    <TodoListTable
+                        itemsInTodoList={itemsInTodoList}
+                        handleDeletingItemInToDoList={handleDeletingItemInToDoList}
+                    />
                 </div>
             </UnauthenticatedTemplate>
         </div>

@@ -1,13 +1,13 @@
-import React, { useState, useContext, useRef } from 'react'
+import React, { useState, useContext, useRef, InputHTMLAttributes } from 'react'
 import ResourceManager from '../ResourceManager';
 import { useInput } from '../hooks/useInput';
 import styles from './AddItemStyles.scss';
 import NoticeModal from '../common/NoticeModal'
 
-
-// const cx = classNames.bind();
-type AppProps = {
-    handleAddNewItemToList: (paramNewItem: string) => void,
+interface AppProps {
+    handleAddNewItemToList: Function;
+    handleSavingUsersTodoList: Function;
+    isUserLoggedIn: boolean;
 }
 /**
  * Thanks to the following for helping me out!
@@ -19,11 +19,18 @@ type AppProps = {
 
 
 export const AddItem: React.FC<AppProps> = (props) => {
-    const { handleAddNewItemToList } = props;
+    const { handleAddNewItemToList, handleSavingUsersTodoList, isUserLoggedIn } = props;
     const { value, setValue, reset } = useInput('');
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
-    const addItemTextBox = useRef<any>();
+
+    /**
+     * We specify the type for useRef (since we're using TypeScript)
+     * as an input element that is nullable and instantiate it w/ a null
+     * value. This null value will be replaced when the 
+     * element renders.
+     */
+    const addItemTextBox = useRef<HTMLInputElement | null>(null);
 
 
     /**
@@ -40,11 +47,18 @@ export const AddItem: React.FC<AppProps> = (props) => {
             setOpenModal(true);
         } else {
             handleAddNewItemToList(value);
-            addItemTextBox.current.focus();
+            addItemTextBox.current?.focus();
             reset();
         }
     }
 
+    /**
+     * Handle saving the user's
+     * list of todo items
+     */
+    const handleSavingInfo = () => {
+        handleSavingUsersTodoList();
+    }
 
     /**
      * Function to close the modal
@@ -54,20 +68,23 @@ export const AddItem: React.FC<AppProps> = (props) => {
     }
 
     return (
-        <form action="/" method="post" onSubmit={handleAddItemToList}>
+        <div>
             <div className={styles.inputElements}>
-                <input
-                    type="text"
-                    id="add-item-text-box"
-                    ref={addItemTextBox}
-                    placeholder={stringResources.todoTextBoxPlaceholder} /**Placeholders aren't accessible -- why we're doubling up. */
-                    name="add-item"
-                    value={value}
-                    className={styles.textBox}
-                    onChange={event => setValue(event.target.value)}
-                >
-                </input>
-                <button type="submit" className={styles.submitButton}>Add</button>
+                <form action="/" method="post" className={styles.inputElements} onSubmit={handleAddItemToList}>
+                    <input
+                        type="text"
+                        id="add-item-text-box"
+                        ref={addItemTextBox}
+                        placeholder={stringResources.todoTextBoxPlaceholder} /**Placeholders aren't accessible -- why we're doubling up. */
+                        name="add-item"
+                        value={value}
+                        className={styles.textBox}
+                        onChange={event => setValue(event.target.value)}
+                    >
+                    </input>
+                    <button type="submit" className={styles.submitButton}>Add</button>
+                </form>
+                <button type="submit" onClick={handleSavingInfo} style={{ display: isUserLoggedIn ? 'flex' : 'none' }} className={styles.saveButton}>Save</button>
             </div>
             <NoticeModal
                 isOpen={openModal}
@@ -75,7 +92,7 @@ export const AddItem: React.FC<AppProps> = (props) => {
                 header={stringResources.modalEmptyInputHeader}
                 subHeader={stringResources.modalEmptyInputSubHeader}
             />
-        </form>
+        </div>
     );
 }
 

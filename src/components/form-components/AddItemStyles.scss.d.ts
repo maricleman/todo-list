@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'inputElements': string;
+  'saveButton': string;
   'submitButton': string;
   'textBox': string;
 }
