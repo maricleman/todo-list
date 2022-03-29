@@ -13,22 +13,64 @@ export const SignInButton = () => {
     const stringResources = useContext(ResourceManager);
     const isAuthenticated = useIsAuthenticated();
 
+
+    /**
+     * This function returns the device type
+     * @returns device type
+     */
+    const handleDetermineDeviceType = () => {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+            return DeviceType.Tablet;
+        }
+        else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+            return DeviceType.Mobile;
+        }
+        return DeviceType.Desktop;
+    };
+
     const handleLogin = () => {
-        instance.loginPopup(loginRequest).catch(e => {
-        console.log(e);
-        });
+        const deviceType = handleDetermineDeviceType();
+        if (deviceType === DeviceType.Desktop) {
+            instance.loginPopup(loginRequest).catch(e => {
+                console.log(e);
+            });
+            /**
+             * If it's not a desktop, don't display the popup login screen
+             */
+        } else {
+            instance.loginRedirect(loginRequest).catch(e => {
+                console.log(e);
+            });
+        }
+
     }
 
     const handleLogout = () => {
-        instance.logoutPopup({
-            postLogoutRedirectUri: "/",
-            mainWindowRedirectUri: "/"
-        });
+        const deviceType = handleDetermineDeviceType();
+        if (deviceType === DeviceType.Desktop) {
+            instance.logoutPopup({
+                postLogoutRedirectUri: "/",
+                mainWindowRedirectUri: "/"
+            }).catch(e => {
+                console.log(e);
+            });
+            /**
+             * If it's not a desktop, don't display the popup login screen
+             */
+        } else {
+            instance.logoutRedirect({
+                postLogoutRedirectUri: "/",
+            }).catch(e => {
+                console.log(e);
+            });
+        }
+
     }
 
     return (
-        <button className={styles.signInBtn} 
-                onClick={() => isAuthenticated ? handleLogout() : handleLogin()}>
+        <button className={styles.signInBtn}
+            onClick={() => isAuthenticated ? handleLogout() : handleLogin()}>
             {isAuthenticated ? stringResources.SignOutBtnText : stringResources.SignInBtnText}
         </button>
     )
