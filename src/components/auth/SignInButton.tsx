@@ -32,7 +32,7 @@ export const SignInButton = () => {
 
     const handleLogin = () => {
         const deviceType = handleDetermineDeviceType();
-        if (deviceType == DeviceType.Desktop) {
+        if (deviceType === DeviceType.Desktop) {
             instance.loginPopup(loginRequest).catch(e => {
                 console.log(e);
             });
@@ -49,7 +49,7 @@ export const SignInButton = () => {
 
     const handleLogout = () => {
         const deviceType = handleDetermineDeviceType();
-        if (deviceType == DeviceType.Desktop) {
+        if (deviceType === DeviceType.Desktop) {
             instance.logoutPopup({
                 postLogoutRedirectUri: "/",
                 mainWindowRedirectUri: "/"
