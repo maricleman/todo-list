@@ -3,3 +3,5 @@ enum DeviceType {
     Tablet,
     Mobile
 }
+
+export default DeviceType;

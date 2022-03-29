@@ -4,6 +4,7 @@ import { useIsAuthenticated } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
 import ResourceManager from '../ResourceManager';
 import styles from './SignInButtonStyles.scss';
+import DeviceType from '../common/DeviceType';
 
 /**
  * Renders a drop down button with child buttons for logging in with a popup or redirect
@@ -31,7 +32,7 @@ export const SignInButton = () => {
 
     const handleLogin = () => {
         const deviceType = handleDetermineDeviceType();
-        if (deviceType === DeviceType.Desktop) {
+        if (deviceType == DeviceType.Desktop) {
             instance.loginPopup(loginRequest).catch(e => {
                 console.log(e);
             });
@@ -48,7 +49,7 @@ export const SignInButton = () => {
 
     const handleLogout = () => {
         const deviceType = handleDetermineDeviceType();
-        if (deviceType === DeviceType.Desktop) {
+        if (deviceType == DeviceType.Desktop) {
             instance.logoutPopup({
                 postLogoutRedirectUri: "/",
                 mainWindowRedirectUri: "/"
