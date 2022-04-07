@@ -8,6 +8,9 @@ import styles from './AppStyles.scss';
 import Header from './Header';
 import Welcome from './auth/Welcome';
 import UserInfo from './common/UserInfo';
+import UserInfoDto from './common/UserInfoDTO';
+import TodoItemDTO from './common/TodoItemDTO';
+import appConfig from '../appConfig.js';
 
 /**
  * I want to extend a thanks to this example for
@@ -29,6 +32,8 @@ function App() {
             const previousId = itemsInTodoList[itemsInTodoList.length - 1].getNumericId();
             todoItem.setId(previousId + 1);
         }
+        const tempListOfTodoItems = [...itemsInTodoList, todoItem];
+        localStorage.setItem('listOfItemsInTodoList', JSON.stringify(tempListOfTodoItems));
         setItemsInTodoList([...itemsInTodoList, todoItem]);
     }
 
@@ -41,6 +46,7 @@ function App() {
             setItemsInTodoList(newItemsInTodoList);
         });
     }
+
 
     /**
      * Handle adding the user's profile
@@ -65,6 +71,42 @@ function App() {
         itemsInTodoList.forEach((item) => {
             console.log('todo item: ', item.title)
         });
+        const userId: string = userProfileInfo?.UserActiveDirectoryID || "";
+        const userDisplayName: string = userProfileInfo?.displayName || "";
+        const userEmail: string = userProfileInfo?.Email || "";
+        let usersTodoList = new Array<TodoItemDTO>();
+
+        itemsInTodoList.forEach((item) => {
+            let specificItem = new TodoItemDTO(item.id, item.title);
+            usersTodoList.push(specificItem);
+        });
+
+        const itemToSave = new UserInfoDto(userId,
+            userDisplayName,
+            userEmail,
+            usersTodoList);
+
+        console.log('itemToSave: ', itemToSave);
+
+        let myHeaders = new Headers();
+        myHeaders.append('Accept', 'application/json');
+        myHeaders.append('Content-Type', 'application/json');
+
+        const options: RequestInit = {
+            method: 'POST',
+            mode: 'cors',
+            headers: myHeaders,
+            body: JSON.stringify(itemToSave)
+        };
+
+        console.log('requestBody: ', options.body);
+
+        console.log('Attempting to save data...');
+        fetch(appConfig.todoManagerApiUrl, options)
+            .then(response => response.text())
+            .then(data => console.log('Success: ', data))
+            .catch(error => console.log(error));
+
         console.log('/**************************************************************/');
     }
 

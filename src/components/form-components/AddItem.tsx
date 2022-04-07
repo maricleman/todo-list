@@ -82,9 +82,9 @@ export const AddItem: React.FC<AppProps> = (props) => {
                         onChange={event => setValue(event.target.value)}
                     >
                     </input>
-                    <button type="submit" className={styles.submitButton}>Add</button>
+                    <button type="submit" className={styles.submitButton}>{stringResources.addButttonText}</button>
                 </form>
-                <button type="submit" onClick={handleSavingInfo} style={{ display: isUserLoggedIn ? 'flex' : 'none' }} className={styles.saveButton}>Save</button>
+                <button type="submit" onClick={handleSavingInfo} style={{ display: isUserLoggedIn ? 'flex' : 'none' }} className={styles.saveButton}>{stringResources.saveButtonText}</button>
             </div>
             <NoticeModal
                 isOpen={openModal}

@@ -9,7 +9,7 @@ import DeviceType from '../common/DeviceType';
 /**
  * Renders a drop down button with child buttons for logging in with a popup or redirect
  */
-export const SignInButton = () => {
+export const SignInSignOutButton = () => {
     const { instance } = useMsal();
     const stringResources = useContext(ResourceManager);
     const isAuthenticated = useIsAuthenticated();
@@ -30,6 +30,9 @@ export const SignInButton = () => {
         return DeviceType.Desktop;
     };
 
+    /**
+     * Handle logging the user in.
+     */
     const handleLogin = () => {
         const deviceType = handleDetermineDeviceType();
         if (deviceType === DeviceType.Desktop) {
@@ -47,6 +50,9 @@ export const SignInButton = () => {
 
     }
 
+    /**
+     * Handle logging the user out.
+     */
     const handleLogout = () => {
         const deviceType = handleDetermineDeviceType();
         if (deviceType === DeviceType.Desktop) {
@@ -77,4 +83,4 @@ export const SignInButton = () => {
     )
 }
 
-export default SignInButton;
+export default SignInSignOutButton;

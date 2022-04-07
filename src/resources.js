@@ -5,6 +5,8 @@ title: 'To Do List',
 
 //AddItem.tsx
 todoTextBoxPlaceholder: 'What needs to be done?',
+addButttonText: 'Add',
+saveButtonText: 'Save',
 
 // Modal Text
 modalEmptyInputHeader: 'Empty input',

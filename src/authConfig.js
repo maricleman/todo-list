@@ -18,8 +18,8 @@ export const msalConfig = {
          * URL: https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-aad-b2c-considerations#authority-for-an-azure-ad-b2c-tenant-and-policy
          */
         authority: "https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp", //"https://login.microsoftonline.com/common",
-        // redirectUri: "http://localhost:3000/", 
-        redirectUri: "https://maricle-todo-list.azurewebsites.net/",
+        redirectUri: "http://localhost:3000/", 
+        // redirectUri: "https://maricle-todo-list.azurewebsites.net/",
         knownAuthorities: ["https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp"] 
     },
     cache: {

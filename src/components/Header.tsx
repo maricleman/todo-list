@@ -1,6 +1,6 @@
 import React from 'react'
 import Title from './Title';
-import SignInButton from './auth/SignInButton';
+import SignInSignOutButton from './auth/SignInSignOutButton';
 import styles from './HeaderStyles.scss';
 
 
@@ -10,7 +10,7 @@ export const Header: React.FC = () => {
         <div className={styles.headerWrapper}>
             <div />
             <div>
-                <SignInButton />
+                <SignInSignOutButton />
             </div>
         </div>
     );
