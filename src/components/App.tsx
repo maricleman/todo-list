@@ -152,7 +152,6 @@ function App() {
                     specificItem.setStringLiteralId(item.id);
                     myListOfTodoItems.push(specificItem);
                 });
-                console.log('myLstOfTodoItems: ', myListOfTodoItems);
                 setItemsInTodoList(myListOfTodoItems);
                 handleToggleLoadingScreen(false);
             })
