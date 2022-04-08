@@ -131,6 +131,7 @@ function App() {
      * already exists;
      */
     const handleRetrievingUserInfoAndList = () => {
+        handleToggleLoadingScreen(true);
         let myHeaders = new Headers();
         myHeaders.append('Accept', 'application/json');
         myHeaders.append('Content-Type', 'application/json');
@@ -153,8 +154,12 @@ function App() {
                 });
                 console.log('myLstOfTodoItems: ', myListOfTodoItems);
                 setItemsInTodoList(myListOfTodoItems);
+                handleToggleLoadingScreen(false);
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                handleToggleLoadingScreen(false);
+                console.log(error)
+            });
     }
 
     useEffect(() => {
