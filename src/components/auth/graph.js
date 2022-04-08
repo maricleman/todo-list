@@ -13,8 +13,6 @@ export async function callMsGraph(accessToken) {
     const options = {
         method: "GET",
         headers: headers,
-        // TODO: NOTE: Only locally should we do this!
-        // mode: 'no-cors'
     };
 
     return fetch(graphConfig.graphMeEndpoint, options)

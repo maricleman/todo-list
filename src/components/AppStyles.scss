@@ -5,14 +5,23 @@
     margin-top: 26px;
 }
 
+.mainContainerLoading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 26px;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
 html {
     font-size: 18px;
     line-height: 1.4;
-  }
+}
 
 body {
     background-image: linear-gradient(to right, #afced3 0, #657ced 100%);
     color: black;
     font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }

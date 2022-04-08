@@ -10,6 +10,10 @@ export default class TodoItem {
         this.title = newTitle;
     }
 
+    setStringLiteralId(paramId: string) {
+        this.id = paramId;
+    }
+
     setId(paramId: number) {
         this.id = `todo-item: ${paramId}`;
     }

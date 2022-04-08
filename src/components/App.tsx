@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
+import React, { useEffect, useState } from 'react'
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useIsAuthenticated } from "@azure/msal-react";
 import Title from './Title';
 import AddItem from './form-components/AddItem';
 import TodoListTable from './table/TodoListTable';
@@ -11,6 +11,7 @@ import UserInfo from './common/UserInfo';
 import UserInfoDto from './common/UserInfoDTO';
 import TodoItemDTO from './common/TodoItemDTO';
 import appConfig from '../appConfig.js';
+import FadeLoader from 'react-spinners/FadeLoader';
 
 /**
  * I want to extend a thanks to this example for
@@ -23,6 +24,17 @@ import appConfig from '../appConfig.js';
 function App() {
     const [itemsInTodoList, setItemsInTodoList] = useState<Array<TodoItem>>([]);
     const [userProfileInfo, setUserProfileInfo] = useState<UserInfo>();
+    const [loading, setLoading] = useState(false);
+    const [mainContentClassName, setMainContentClassName] = useState(styles.mainContainer);
+    const isAuthenticated = useIsAuthenticated();
+    const [isUserProfileInfoAvailable, setIsUserProfileAvailable] = useState(false);
+
+    const override = `
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    `;
 
     const handleAddNewItemToList = (paramNewItem: string) => {
         let todoItem = new TodoItem(paramNewItem);
@@ -56,6 +68,17 @@ function App() {
      */
     const handleAddingUserProfileInfo = (userProfileInfo: UserInfo) => {
         setUserProfileInfo(userProfileInfo);
+        setIsUserProfileAvailable(true);
+    }
+
+    const handleToggleLoadingScreen = (isLoading: boolean) => {
+        if (isLoading) {
+            setMainContentClassName(styles.mainContainerLoading);
+            setLoading(true);
+        } else {
+            setMainContentClassName(styles.mainContainer);
+            setLoading(false);
+        }
     }
 
     /**
@@ -63,14 +86,8 @@ function App() {
      * list of todo items
      */
     const handleSavingUsersTodoList = () => {
-        console.log('/**************************************************************/');
-        console.log('Info to save for user...');
-        console.log('ID: ', userProfileInfo?.UserActiveDirectoryID);
-        console.log('Name: ', userProfileInfo?.displayName);
-        console.log('Email: ', userProfileInfo?.Email);
-        itemsInTodoList.forEach((item) => {
-            console.log('todo item: ', item.title)
-        });
+        handleToggleLoadingScreen(true);
+
         const userId: string = userProfileInfo?.UserActiveDirectoryID || "";
         const userDisplayName: string = userProfileInfo?.displayName || "";
         const userEmail: string = userProfileInfo?.Email || "";
@@ -86,8 +103,6 @@ function App() {
             userEmail,
             usersTodoList);
 
-        console.log('itemToSave: ', itemToSave);
-
         let myHeaders = new Headers();
         myHeaders.append('Accept', 'application/json');
         myHeaders.append('Content-Type', 'application/json');
@@ -99,16 +114,54 @@ function App() {
             body: JSON.stringify(itemToSave)
         };
 
-        console.log('requestBody: ', options.body);
-
-        console.log('Attempting to save data...');
         fetch(appConfig.todoManagerApiUrl, options)
-            .then(response => response.text())
-            .then(data => console.log('Success: ', data))
-            .catch(error => console.log(error));
-
-        console.log('/**************************************************************/');
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                handleToggleLoadingScreen(false);
+            })
+            .catch(error => {
+                console.log(error);
+                handleToggleLoadingScreen(false);
+            });
     }
+
+    /**
+     * Handle getting the user's todo list -- if one
+     * already exists;
+     */
+    const handleRetrievingUserInfoAndList = () => {
+        let myHeaders = new Headers();
+        myHeaders.append('Accept', 'application/json');
+        myHeaders.append('Content-Type', 'application/json');
+
+        const options: RequestInit = {
+            method: 'GET',
+            mode: 'cors',
+            headers: myHeaders,
+        };
+
+        fetch(`${appConfig.todoManagerApiUrl}/?ActiveDirectoryId=${userProfileInfo?.UserActiveDirectoryID}`,
+            options).then(response => response.json())
+            .then(data => {
+                const newArrayOfTodoItems = data.list_of_todo_items;
+                const myListOfTodoItems = new Array<TodoItem>();
+                newArrayOfTodoItems.forEach(item => {
+                    let specificItem = new TodoItem(item.title);
+                    specificItem.setStringLiteralId(item.id);
+                    myListOfTodoItems.push(specificItem);
+                });
+                console.log('myLstOfTodoItems: ', myListOfTodoItems);
+                setItemsInTodoList(myListOfTodoItems);
+            })
+            .catch(error => console.log(error));
+    }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            handleRetrievingUserInfoAndList();
+        }
+    }, [isUserProfileInfoAvailable]);
 
     /**
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
@@ -116,7 +169,7 @@ function App() {
     return (
         <div className="App">
             <AuthenticatedTemplate>
-                <div className={styles.mainContainer}>
+                <div className={mainContentClassName}>
                     <Welcome handleAddingUserProfileInfo={handleAddingUserProfileInfo} />
                     <Header />
                     <Title />
@@ -147,6 +200,7 @@ function App() {
                     />
                 </div>
             </UnauthenticatedTemplate>
+            <FadeLoader css={override} loading={loading} />
         </div>
     );
 }
