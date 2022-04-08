@@ -17,7 +17,7 @@ modalEmptyInputSubHeader: 'Please enter a value before adding something to the l
 modalEmptyValueSubheader: 'Please enter a value to continue',
 
 // SignInButton.tsx
-SignInBtnText: 'Sign In',
+SignInBtnText: 'Sign In/Sign Up',
 SignOutBtnText: 'Sign Out'
 
 };
