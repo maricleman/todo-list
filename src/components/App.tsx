@@ -133,7 +133,9 @@ function App() {
      * already exists;
      */
     const handleRetrievingUserInfoAndList = () => {
+
         handleToggleLoadingScreen(true);
+
         let myHeaders = new Headers();
         myHeaders.append('Accept', 'application/json');
         myHeaders.append('Content-Type', 'application/json');
