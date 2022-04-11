@@ -143,25 +143,26 @@ function App() {
             mode: 'cors',
             headers: myHeaders,
         };
-
-        fetch(`${appConfig.todoManagerApiUrl}/?ActiveDirectoryId=${userProfileInfo?.UserActiveDirectoryID}`,
-            options).then(response => response.json())
-            .then(data => {
-                const newArrayOfTodoItems = data.list_of_todo_items;
-                const myListOfTodoItems = new Array<TodoItem>();
-                newArrayOfTodoItems.forEach(item => {
-                    let specificItem = new TodoItem(item.title);
-                    specificItem.setStringLiteralId(item.id);
-                    specificItem.setIsChecked(item.is_checked);
-                    myListOfTodoItems.push(specificItem);
+        if (userProfileInfo?.UserActiveDirectoryID) {
+            fetch(`${appConfig.todoManagerApiUrl}/?ActiveDirectoryId=${userProfileInfo?.UserActiveDirectoryID}`,
+                options).then(response => response.json())
+                .then(data => {
+                    const newArrayOfTodoItems = data.list_of_todo_items;
+                    const myListOfTodoItems = new Array<TodoItem>();
+                    newArrayOfTodoItems.forEach(item => {
+                        let specificItem = new TodoItem(item.title);
+                        specificItem.setStringLiteralId(item.id);
+                        specificItem.setIsChecked(item.is_checked);
+                        myListOfTodoItems.push(specificItem);
+                    });
+                    setItemsInTodoList(myListOfTodoItems);
+                    handleToggleLoadingScreen(false);
+                })
+                .catch(error => {
+                    handleToggleLoadingScreen(false);
+                    console.log(error)
                 });
-                setItemsInTodoList(myListOfTodoItems);
-                handleToggleLoadingScreen(false);
-            })
-            .catch(error => {
-                handleToggleLoadingScreen(false);
-                console.log(error)
-            });
+        }
     }
 
     useEffect(() => {
