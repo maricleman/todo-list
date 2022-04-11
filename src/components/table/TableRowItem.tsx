@@ -63,10 +63,6 @@ export const TableRowItem: React.FC<AppProps> = (props) => {
         }
     }, [isEditable]);
 
-    const handleOnEdit = (id: string) => {
-        setIsEditable(!isEditable);
-    };
-
     const handleToggleIsEditableFlag = () => {
         setIsEditable(!isEditable);
     }

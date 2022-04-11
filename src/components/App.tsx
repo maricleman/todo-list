@@ -36,6 +36,8 @@ function App() {
         transform: translate(-50%, -50%);
     `;
 
+
+
     const handleAddNewItemToList = (paramNewItem: string) => {
         let todoItem = new TodoItem(paramNewItem);
         if (itemsInTodoList.length === 0) {
@@ -94,7 +96,7 @@ function App() {
         let usersTodoList = new Array<TodoItemDTO>();
 
         itemsInTodoList.forEach((item) => {
-            let specificItem = new TodoItemDTO(item.id, item.title);
+            let specificItem = new TodoItemDTO(item.id, item.title, item.isChecked);
             usersTodoList.push(specificItem);
         });
 
@@ -150,6 +152,7 @@ function App() {
                 newArrayOfTodoItems.forEach(item => {
                     let specificItem = new TodoItem(item.title);
                     specificItem.setStringLiteralId(item.id);
+                    specificItem.setIsChecked(item.is_checked);
                     myListOfTodoItems.push(specificItem);
                 });
                 setItemsInTodoList(myListOfTodoItems);

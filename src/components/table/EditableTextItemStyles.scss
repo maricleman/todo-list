@@ -1,0 +1,19 @@
+.todoListItem {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.todoListItemCrossedOut {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-decoration: line-through;
+}
+
+.checkbox {
+    display: flex;
+    align-self: center;
+}

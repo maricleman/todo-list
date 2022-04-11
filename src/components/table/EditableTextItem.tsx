@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import ResourceManager from '../ResourceManager';
 import TodoItem from '../common/TodoItem';
 import NoticeModal from '../common/NoticeModal'
+import styles from './EditableTextItemStyles.scss';
 
 
 type AppProps = {
@@ -20,6 +21,7 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
     let { todoItem, isEditable, value, setValue, saveButton, userJustClosedModal, handleSetUserJustClosedModal } = props;
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
+    const [todoItemClassName, setTodoClassName] = useState<string>();
 
     /**
      * Function to close the modal
@@ -44,7 +46,28 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
                 saveButton.click();
             }
         }
+    }
 
+    useEffect(() => {
+        if (todoItem.isChecked) {
+            setTodoClassName(styles.todoListItemCrossedOut);
+        } else {
+            setTodoClassName(styles.todoListItem);
+        }
+    }, []);
+
+
+    /**
+     * Handle the user changing the
+     * state of the check box. 
+     */
+    const handleOnChangeCheckBox = () => {
+        todoItem.setIsChecked(!todoItem.isChecked);
+        if (todoItem.isChecked) {
+            setTodoClassName(styles.todoListItemCrossedOut);
+        } else {
+            setTodoClassName(styles.todoListItem);
+        }
     }
 
     if (isEditable) {
@@ -70,7 +93,10 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
         );
     } else {
         return (
-            <p>{value}</p>
+            <label className={todoItemClassName}>
+                <input type='checkbox' className={styles.checkbox} checked={todoItem.isChecked} onChange={handleOnChangeCheckBox}></input>
+                {value}
+            </label>
         );
     }
 

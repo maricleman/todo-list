@@ -1,6 +1,7 @@
 export default class TodoItem {
     id: string;
     title: string;
+    isChecked: boolean;
 
     constructor(public paramTitle: string) {
         this.title = paramTitle;
@@ -16,6 +17,10 @@ export default class TodoItem {
 
     setId(paramId: number) {
         this.id = `todo-item: ${paramId}`;
+    }
+
+    setIsChecked(paramIsChecked: boolean) {
+        this.isChecked = paramIsChecked;
     }
 
     getNumericId(): number {
