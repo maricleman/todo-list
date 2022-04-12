@@ -73,16 +73,18 @@ export const EditableTextItem: React.FC<AppProps> = (props) => {
     if (isEditable) {
         return (
             <div>
-                <input
-                    type="text"
-                    id="edit-item-text-box"
-                    name="edit-item-text-box"
-                    autoFocus={true}
-                    value={value}
-                    onKeyUp={handleKeyStroke}
-                    onChange={event => setValue(event.target.value)}
-                >
-                </input>
+                <label className={todoItemClassName}>
+                    <input type='checkbox' className={styles.checkbox} checked={todoItem.isChecked} onChange={handleOnChangeCheckBox}></input>
+                    <input
+                        type="text"
+                        id="edit-item-text-box"
+                        name="edit-item-text-box"
+                        autoFocus={true}
+                        value={value}
+                        onKeyUp={handleKeyStroke}
+                        onChange={event => setValue(event.target.value)}
+                    />
+                </label>
                 <NoticeModal
                     isOpen={openModal}
                     handleAfterClose={handleModalAfterClose}
