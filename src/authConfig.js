@@ -19,8 +19,8 @@ export const msalConfig = {
          */
         authority: "https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp", //"https://login.microsoftonline.com/common",
         // redirectUri: "http://localhost:3000/", 
-        // redirectUri: "https://maricle-todo-list.azurewebsites.net/",
-        redirectUri: "https://maricle-todo-list.com/",
+        redirectUri: "https://maricle-todo-list.azurewebsites.net/",
+        // redirectUri: "https://maricle-todo-list.com/",
         knownAuthorities: ["https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp"] 
     },
     cache: {
