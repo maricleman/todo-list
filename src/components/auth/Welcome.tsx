@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../../authConfig";
+import { loginRequest, msalConfig } from "../../authConfig";
 import { callMsGraph } from "./graph";
 import styles from './WelcomeStyles.scss';
 import UserInfo from '../common/UserInfo';
@@ -64,6 +64,7 @@ export const Welcome: React.FC<AppProps> = (props) => {
         RetrieveUserName();
     }, []);
 
+    console.log('redirectURL: ', msalConfig.auth.redirectUri);
     if (profileData !== null || typeof (profileData) !== 'undefined') {
         return (
             <h4 className={styles.welcomeMessage}>Welcome {userName}!</h4>

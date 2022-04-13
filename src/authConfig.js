@@ -10,6 +10,8 @@ import { LogLevel } from "@azure/msal-browser";
  * For a full list of MSAL.js configuration parameters, visit:
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/configuration.md 
  */
+// Dynamically determine the origin where the application is hosted. 
+const origin = location.origin;
 export const msalConfig = {
     auth: {
         clientId: "2debf791-a717-477c-9f29-3cf6833d90ef",
@@ -18,9 +20,7 @@ export const msalConfig = {
          * URL: https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-aad-b2c-considerations#authority-for-an-azure-ad-b2c-tenant-and-policy
          */
         authority: "https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp", //"https://login.microsoftonline.com/common",
-        // redirectUri: "http://localhost:3000/", 
-        // redirectUri: "https://maricle-todo-list.azurewebsites.net/",
-        redirectUri: "https://maricle-todo-list.com/",
+        redirectUri: origin, //"https://maricle-todo-list.com/",
         knownAuthorities: ["https://MaricleConsulting.b2clogin.com/tfp/MaricleConsulting.onmicrosoft.com/B2C_1_SignInToApp"] 
     },
     cache: {
