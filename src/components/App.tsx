@@ -46,8 +46,6 @@ function App() {
             const previousId = itemsInTodoList[itemsInTodoList.length - 1].getNumericId();
             todoItem.setId(previousId + 1);
         }
-        const tempListOfTodoItems = [...itemsInTodoList, todoItem];
-        localStorage.setItem('listOfItemsInTodoList', JSON.stringify(tempListOfTodoItems));
         setItemsInTodoList([...itemsInTodoList, todoItem]);
     }
 
@@ -87,7 +85,7 @@ function App() {
      * Handle saving the user's
      * list of todo items
      */
-    const handleSavingUsersTodoList = () => {
+    const handleSavingUsersTodoList = async () => {
         handleToggleLoadingScreen(true);
 
         const userId: string = userProfileInfo?.UserActiveDirectoryID || "";
@@ -116,23 +114,42 @@ function App() {
             body: JSON.stringify(itemToSave)
         };
 
-        fetch(appConfig.todoManagerApiUrl, options)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+        try {
+            const response = await fetch(appConfig.todoManagerApiUrl, options);
+            if (!response.ok) {
+                const message = `An error has occured: ${response.status}`;
+                console.log(message);
                 handleToggleLoadingScreen(false);
-            })
-            .catch(error => {
-                console.log(error);
-                handleToggleLoadingScreen(false);
-            });
+            }
+            const data = await response.json();
+            console.log('Response: ', data);
+            handleToggleLoadingScreen(false);
+        } catch (error) {
+            console.log(error);
+            handleToggleLoadingScreen(false);
+        }
+
+        /**
+         * Attempting the new way of loading data.
+         */
+
+        // fetch(appConfig.todoManagerApiUrl, options)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         handleToggleLoadingScreen(false);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         handleToggleLoadingScreen(false);
+        //     });
     }
 
     /**
      * Handle getting the user's todo list -- if one
      * already exists;
      */
-    const handleRetrievingUserInfoAndList = () => {
+    const handleRetrievingUserInfoAndList = async () => {
 
         handleToggleLoadingScreen(true);
 
@@ -146,24 +163,55 @@ function App() {
             headers: myHeaders,
         };
         if (userProfileInfo?.UserActiveDirectoryID) {
-            fetch(`${appConfig.todoManagerApiUrl}/?ActiveDirectoryId=${userProfileInfo?.UserActiveDirectoryID}`,
-                options).then(response => response.json())
-                .then(data => {
-                    const newArrayOfTodoItems = data.list_of_todo_items;
-                    const myListOfTodoItems = new Array<TodoItem>();
-                    newArrayOfTodoItems.forEach(item => {
-                        let specificItem = new TodoItem(item.title);
-                        specificItem.setStringLiteralId(item.id);
-                        specificItem.setIsChecked(item.is_checked);
-                        myListOfTodoItems.push(specificItem);
-                    });
-                    setItemsInTodoList(myListOfTodoItems);
+            try {
+                const response = await fetch(`${appConfig.todoManagerApiUrl}/?ActiveDirectoryId=${userProfileInfo?.UserActiveDirectoryID}`, options);
+                console.log('response: ', response);
+                if (!response.ok) {
+                    const message = `An error has occured: ${response.status}`;
+                    console.log(message);
                     handleToggleLoadingScreen(false);
-                })
-                .catch(error => {
-                    handleToggleLoadingScreen(false);
-                    console.log(error)
+                }
+                const data = await response.json();
+
+                const newArrayOfTodoItems = data.list_of_todo_items;
+                const myListOfTodoItems = new Array<TodoItem>();
+                newArrayOfTodoItems.forEach(item => {
+                    let specificItem = new TodoItem(item.title);
+                    specificItem.setStringLiteralId(item.id);
+                    specificItem.setIsChecked(item.is_checked);
+                    myListOfTodoItems.push(specificItem);
                 });
+                setItemsInTodoList(myListOfTodoItems);
+                handleToggleLoadingScreen(false);
+            }
+            catch (error) {
+                console.log('Fetch error: ', error);
+                handleToggleLoadingScreen(false);
+            }
+
+            /**
+             * This was the old way of using fetch.
+             * Now we can use async/await!
+             */
+
+            // fetch(`${appConfig.todoManagerApiUrl}/?ActiveDirectoryId=${userProfileInfo?.UserActiveDirectoryID}`,
+            //     options).then(response => response.json())
+            //     .then(data => {
+            //         const newArrayOfTodoItems = data.list_of_todo_items;
+            //         const myListOfTodoItems = new Array<TodoItem>();
+            //         newArrayOfTodoItems.forEach(item => {
+            //             let specificItem = new TodoItem(item.title);
+            //             specificItem.setStringLiteralId(item.id);
+            //             specificItem.setIsChecked(item.is_checked);
+            //             myListOfTodoItems.push(specificItem);
+            //         });
+            //         setItemsInTodoList(myListOfTodoItems);
+            //         handleToggleLoadingScreen(false);
+            //     })
+            //     .catch(error => {
+            //         handleToggleLoadingScreen(false);
+            //         console.log(error)
+            //     });
         }
     }
 
