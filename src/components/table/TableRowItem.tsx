@@ -9,7 +9,6 @@ import TodoItem from '../common/TodoItem';
 import EditableTextItem from './EditableTextItem';
 import NoticeModal from '../common/NoticeModal'
 
-// const cx = classNames.bind();
 type AppProps = {
     itemInTodoList: TodoItem,
     handleDeletingItemInToDoList: Function,
