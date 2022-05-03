@@ -5,19 +5,19 @@ import NoticeModal from '../common/NoticeModal'
 import styles from './EditableTextItemStyles.scss';
 
 
-type AppProps = {
+interface IAppProps {
     todoItem: TodoItem
     isEditable: boolean,
     value: string,
     setValue: React.Dispatch<React.SetStateAction<string>>,
     saveButton: any,
     userJustClosedModal: boolean,
-    handleSetUserJustClosedModal: Function
+    handleSetUserJustClosedModal: Function // Specify return and input
 }
 
 
 
-export const EditableTextItem: React.FC<AppProps> = (props) => {
+export const EditableTextItem: React.FC<IAppProps> = (props) => {
     let { todoItem, isEditable, value, setValue, saveButton, userJustClosedModal, handleSetUserJustClosedModal } = props;
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
