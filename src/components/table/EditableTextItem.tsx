@@ -1,8 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import ResourceManager from '../ResourceManager';
 import TodoItem from '../common/TodoItem';
 import NoticeModal from '../common/NoticeModal'
 import styles from './EditableTextItemStyles.scss';
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 
 interface IAppProps {
@@ -10,15 +11,17 @@ interface IAppProps {
     isEditable: boolean,
     value: string,
     setValue: React.Dispatch<React.SetStateAction<string>>,
-    saveButton: any,
     userJustClosedModal: boolean,
-    handleSetUserJustClosedModal: Function // Specify return and input
+    handleSetUserJustClosedModal: (isJustClosed: boolean) => void,
+    handleDeletingItemInToDoList: (idToDelete: number) => void,
+    handleToggleIsEditableFlag: () => void
 }
 
 
 
 export const EditableTextItem: React.FC<IAppProps> = (props) => {
-    let { todoItem, isEditable, value, setValue, saveButton, userJustClosedModal, handleSetUserJustClosedModal } = props;
+    let { todoItem, isEditable, value, setValue, userJustClosedModal, handleSetUserJustClosedModal, handleDeletingItemInToDoList, handleToggleIsEditableFlag } = props;
+    const saveButton = useRef<HTMLButtonElement>(null);
     const stringResources = useContext(ResourceManager);
     const [openModal, setOpenModal] = useState(false);
     const [todoItemClassName, setTodoClassName] = useState<string>();
@@ -40,10 +43,11 @@ export const EditableTextItem: React.FC<IAppProps> = (props) => {
         if (userJustClosedModal === true) {
             handleSetUserJustClosedModal(false);
         } else {
+            console.log('You pressed enter!');
             // User press enter key?
             if (e.keyCode === 13) {
                 // If so, save changes
-                saveButton.click();
+                saveButton.current?.click();
             }
         }
     }
@@ -70,6 +74,21 @@ export const EditableTextItem: React.FC<IAppProps> = (props) => {
         }
     }
 
+    /**
+     * The user clicks the save
+     * button after editing a pre-existing
+     * todo item.
+     * What happens next?
+     */
+    const handleSaveButton = () => {
+        handleToggleIsEditableFlag();
+        if (value !== '') {
+            document.getElementById('add-item-text-box')?.focus();
+        } else {
+            document.getElementById('edit-item-text-box')?.focus();
+        }
+    }
+
     if (isEditable) {
         return (
             <div>
@@ -85,6 +104,17 @@ export const EditableTextItem: React.FC<IAppProps> = (props) => {
                         onChange={event => setValue(event.target.value)}
                     />
                 </label>
+                <div className={styles.toDoItem}>
+                    <button type="button" ref={saveButton} style={{ display: isEditable ? 'flex' : 'none' }} onClick={handleSaveButton}>
+                        {stringResources.saveTodoItemText}
+                    </button>
+                    <button type="button" style={{ display: isEditable ? 'none' : 'flex' }} onClick={handleToggleIsEditableFlag}>
+                        <FaEdit />
+                    </button>
+                    <button type="button" className="delete-btn" onClick={() => handleDeletingItemInToDoList(todoItem.getNumericId())}>
+                        <FaTrash />
+                    </button>
+                </div>
                 <NoticeModal
                     isOpen={openModal}
                     handleAfterClose={handleModalAfterClose}
@@ -95,10 +125,23 @@ export const EditableTextItem: React.FC<IAppProps> = (props) => {
         );
     } else {
         return (
-            <label className={todoItemClassName}>
-                <input type='checkbox' className={styles.checkbox} checked={todoItem.isChecked} onChange={handleOnChangeCheckBox}></input>
-                {value}
-            </label>
+            <>
+                <label className={todoItemClassName}>
+                    <input type='checkbox' className={styles.checkbox} checked={todoItem.isChecked} onChange={handleOnChangeCheckBox}></input>
+                    {value}
+                </label>
+                <div className={styles.toDoItem}>
+                    <button type="button" style={{ display: isEditable ? 'flex' : 'none' }} onClick={handleSaveButton}>
+                        {stringResources.saveTodoItemText}
+                    </button>
+                    <button type="button" style={{ display: isEditable ? 'none' : 'flex' }} onClick={handleToggleIsEditableFlag}>
+                        <FaEdit />
+                    </button>
+                    <button type="button" className="delete-btn" onClick={() => handleDeletingItemInToDoList(todoItem.getNumericId())}>
+                        <FaTrash />
+                    </button>
+                </div>
+            </>
         );
     }
 

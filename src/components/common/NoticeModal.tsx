@@ -14,7 +14,7 @@ export const NoticeModal: React.FC<AppProps> = (props) => {
     const { isOpen, handleAfterClose, header, subHeader } = props;
     const stringResources = useContext(ResourceManager);
     // You must specify a type w/ useRef in order for this to work.
-    const closeButton = useRef<any>();
+    const closeButton = useRef<HTMLButtonElement>(null);
 
     // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
     Modal.setAppElement('#root');
@@ -62,7 +62,7 @@ export const NoticeModal: React.FC<AppProps> = (props) => {
         // Did the user press the enter key?
         if (e.keyCode === 13) {
             // If so, close the modal
-            closeButton.current.click();
+            closeButton.current?.click();
         }
     }
 

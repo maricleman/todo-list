@@ -1,4 +1,4 @@
-export default {
+export default {    
 
 //Title.tsx
 title: 'To Do List',
@@ -7,6 +7,9 @@ title: 'To Do List',
 todoTextBoxPlaceholder: 'What needs to be done?',
 addButttonText: 'Add',
 saveButtonText: 'Save',
+
+// EditableTextItem
+saveTodoItemText: 'Save',
 
 // Modal Text
 modalEmptyInputHeader: 'Empty input',

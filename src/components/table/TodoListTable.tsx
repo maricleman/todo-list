@@ -9,7 +9,7 @@ import TodoItem from '../common/TodoItem';
 
 type AppProps = {
     itemsInTodoList: Array<TodoItem>,
-    handleDeletingItemInToDoList: Function
+    handleDeletingItemInToDoList: (idToDelete: number) => void
 }
 /**
  * Thanks to the following for helping me out!

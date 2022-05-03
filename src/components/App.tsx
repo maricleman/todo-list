@@ -128,21 +128,6 @@ function App() {
             console.log(error);
             handleToggleLoadingScreen(false);
         }
-
-        /**
-         * Attempting the new way of loading data.
-         */
-
-        // fetch(appConfig.todoManagerApiUrl, options)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data);
-        //         handleToggleLoadingScreen(false);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         handleToggleLoadingScreen(false);
-        //     });
     }
 
     /**
@@ -188,30 +173,6 @@ function App() {
                 console.log('Fetch error: ', error);
                 handleToggleLoadingScreen(false);
             }
-
-            /**
-             * This was the old way of using fetch.
-             * Now we can use async/await!
-             */
-
-            // fetch(`${appConfig.todoManagerApiUrl}/?ActiveDirectoryId=${userProfileInfo?.UserActiveDirectoryID}`,
-            //     options).then(response => response.json())
-            //     .then(data => {
-            //         const newArrayOfTodoItems = data.list_of_todo_items;
-            //         const myListOfTodoItems = new Array<TodoItem>();
-            //         newArrayOfTodoItems.forEach(item => {
-            //             let specificItem = new TodoItem(item.title);
-            //             specificItem.setStringLiteralId(item.id);
-            //             specificItem.setIsChecked(item.is_checked);
-            //             myListOfTodoItems.push(specificItem);
-            //         });
-            //         setItemsInTodoList(myListOfTodoItems);
-            //         handleToggleLoadingScreen(false);
-            //     })
-            //     .catch(error => {
-            //         handleToggleLoadingScreen(false);
-            //         console.log(error)
-            //     });
         }
     }
 

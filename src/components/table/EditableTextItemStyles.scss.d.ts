@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'checkbox': string;
+  'toDoItem': string;
   'todoListItem': string;
   'todoListItemCrossedOut': string;
 }
