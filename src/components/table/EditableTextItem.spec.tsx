@@ -6,7 +6,7 @@ import { render, screen } from '@testing-library/react';
 import { useRef, useState } from 'react';
 import React from 'react';
 
-// Look at this: https://github.com/escreengithub/arc/blob/double-manual-barcode/libs/arc-core/src/lib/input-text-field/InputTextField.spec.tsx
+// Look at this: https://github.com/escreengithub/arc/blob/master/libs/arc-core/src/lib/input-text-field/InputTextField.spec.tsx
 
 test('renders successfully', () => {
 
